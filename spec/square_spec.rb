@@ -3,10 +3,15 @@ require 'square'
 describe Square do
 
 	let(:board){Board.new}
+	let(:square){Square.new}
 
-	xit 'can place a character on the second square' do
-		board.row(1).square(2).change_to = "X"
-		expect(board.row(1).square(2)).to eq "X"
+	it 'starts with nothing in it' do
+		expect(square.mark).to eq nil
+	end
+
+	it 'can place a character on itself' do
+		square.mark = "X"
+		expect(square.mark).to eq "X"
 	end
 
 end
