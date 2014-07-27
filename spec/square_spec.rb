@@ -14,4 +14,11 @@ describe Square do
 		expect(square.mark).to eq "X"
 	end
 
+	it 'can check for equality with a string with the same contents as it' do
+		square.mark = "X"
+		expect(square === "X").to be_truthy
+		square.mark = "O"
+		expect(square === "O").to be_truthy
+	end
+
 end
