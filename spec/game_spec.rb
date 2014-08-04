@@ -12,10 +12,8 @@ describe 'TicTacToe' do
 		expect(game.row(3).length).to eq 3
 	end
 
-	it 'can output its squares as a tictactoe player would expect' do
-		expect(game.row(1))
+	it 'has only one instance' do
+		expect{Game.new}.to raise_error
 	end
-
-
 	
 end

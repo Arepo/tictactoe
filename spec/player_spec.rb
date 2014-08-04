@@ -15,5 +15,9 @@ describe Player do
 		inara.play_on(square)
 		expect(square === :O).to be_truthy
 	end
+
+	it 'has a game' do
+		expect(malcolm.game.class).to eq Game
+	end
 	
 end

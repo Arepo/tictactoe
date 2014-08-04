@@ -2,13 +2,15 @@ require_relative 'row'
 
 class Game
 
+	attr_reader :columns
+
 	def initialize
-		@grid = []
+		@columns = []
 		make_rows
 	end
 
 	def row(row_num)
-		@grid[row_num - 1]
+		columns[row_num - 1]
 	end
 
 	def add_blank_row
@@ -16,12 +18,11 @@ class Game
 	end
 
 	def make_rows
-		3.times {@grid << add_blank_row}
+		3.times {columns << add_blank_row}
 	end
 
-	def print_rows
-
+	def display
+		columns.each {|row| puts row.to_s}
 	end
 
 end
-

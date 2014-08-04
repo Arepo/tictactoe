@@ -18,4 +18,8 @@ class Row < Array
 		self[2]
 	end
 
+	def to_s
+		self.map {|square| square.mark ? mark.to_s : "_"}.join
+	end
+
 end
