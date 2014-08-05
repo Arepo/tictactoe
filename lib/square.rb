@@ -2,16 +2,16 @@ class Square
 
 	attr_accessor :mark
 
-	def ==(other_mark)
-		if stringify(other_mark) =~ /[XO]/
-			return true if stringify(mark) == stringify(other_mark)
-		end
+	def ==(square_or_mark)
+		return false if mark == nil
+		return true if stringify(mark) == stringify(square_or_mark)[/^[XO]$/] 
+		return true if stringify(mark) == stringify(square_or_mark)
 	end
 
 	private
 
-	def stringify(mark)
-		mark.to_s.upcase
+	def stringify(square_or_mark)
+		square_or_mark.to_s.upcase
 	end
 
 end

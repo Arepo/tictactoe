@@ -8,12 +8,12 @@ describe Player do
 
 	it 'can place its X mark on a square' do
 		malcolm.play_on(square)
-		expect(square === :X).to be true
+		expect(square == :X).to be true
 	end
 
 	it 'can have O as its mark and play that on a square' do
 		inara.play_on(square)
-		expect(square === :O).to be true
+		expect(square == :O).to be true
 	end
 
 	it 'has access to the same board as his/her opponent' do
