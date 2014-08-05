@@ -2,7 +2,7 @@ require 'square'
 
 describe Square do
 
-	let(:game){Game.new}
+	let(:board){Board.new}
 	let(:square){Square.new}
 
 	it 'starts with nothing in it' do

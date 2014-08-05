@@ -2,7 +2,7 @@ require 'game'
 
 describe 'TicTacToe' do 
 
-	let(:game){Game.new}
+	let(:game){Game.instance}
 
 	it 'can create a three-column row' do
 		expect(game.add_blank_row.length).to eq 3

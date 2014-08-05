@@ -1,7 +1,7 @@
 require_relative 'row'
 require 'singleton'
 
-class Game
+class Board
 
 	include Singleton
 
@@ -10,6 +10,8 @@ class Game
 	def initialize
 		@columns = []
 		make_rows
+		# @player1 = Player.new
+		# @player2 = Player.new(:O)
 	end
 
 	def row(row_num)
@@ -26,6 +28,6 @@ class Game
 
 	def display
 		columns.each {|row| puts row.to_s}
-	end
+	end	
 
 end
