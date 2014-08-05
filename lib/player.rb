@@ -5,7 +5,7 @@ class Player
 
 	def initialize(chosen_mark = :X)
 		@chosen_mark = chosen_mark
-		@game = Game.new
+		@game = Game.instance
 	end
 
 	def play_on(square)

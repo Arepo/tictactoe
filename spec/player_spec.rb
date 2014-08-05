@@ -19,5 +19,7 @@ describe Player do
 	it 'has a game' do
 		expect(malcolm.game.class).to eq Game
 	end
+
+	
 	
 end

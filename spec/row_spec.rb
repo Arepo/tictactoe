@@ -2,7 +2,7 @@ require 'row.rb'
 
 describe Row do
 
-	let(:game){Game.new}
+	let(:game){Game.instance}
 
 	it 'can refer to each square ' do
 		expect(game.row(1).first_square).to eq game.row(1)[0]

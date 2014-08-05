@@ -1,6 +1,9 @@
 require_relative 'row'
+require 'singleton'
 
 class Game
+
+	include Singleton
 
 	attr_reader :columns
 
