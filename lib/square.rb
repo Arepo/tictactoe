@@ -4,7 +4,7 @@ class Square
 
 	def ==(other_mark)
 		if stringify(other_mark) =~ /[XO]/
-			true if stringify(mark) == stringify(other_mark)
+			return true if stringify(mark) == stringify(other_mark)
 		end
 	end
 

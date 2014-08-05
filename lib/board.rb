@@ -5,19 +5,15 @@ class Board
 
 	include Singleton
 
-	include Singleton
-
-	attr_reader :columns
+	attr_reader :rows
 
 	def initialize
-		@columns = []
+		@rows = []
 		make_rows
-		# @player1 = Player.new
-		# @player2 = Player.new(:O)
 	end
 
 	def row(row_num)
-		columns[row_num - 1]
+		rows[row_num - 1]
 	end
 
 	def add_blank_row
@@ -25,11 +21,11 @@ class Board
 	end
 
 	def make_rows
-		3.times {columns << add_blank_row}
+		3.times {rows << add_blank_row}
 	end
 
 	def display
-		columns.each {|row| puts row.to_s}
+		rows.each {|row| puts row.to_s}
 	end	
 
 end
