@@ -5,6 +5,8 @@ class Board
 
 	include Singleton
 
+	include Singleton
+
 	attr_reader :columns
 
 	def initialize
