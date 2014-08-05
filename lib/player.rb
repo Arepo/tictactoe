@@ -1,3 +1,4 @@
+require 'board'
 class Player
 
 	attr_reader :chosen_mark

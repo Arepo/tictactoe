@@ -14,7 +14,7 @@ describe Square do
 		expect(square.mark).to eq :X
 	end
 
-	it 'can check for equality with a string with the same contents as it' do
+	it 'recognises === equality when its contents match a mark' do
 		square.mark = :X
 		expect(square === :X).to be_truthy
 		square.mark = :O
