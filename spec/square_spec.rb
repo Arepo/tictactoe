@@ -14,11 +14,11 @@ describe Square do
 		expect(square.mark).to eq :X
 	end
 
-	it 'recognises === equality when its contents match a mark' do
+	it 'recognises == equality when its contents match a mark' do
 		square.mark = :X
-		expect(square === :X).to be_truthy
+		expect(square == :X).to be true
 		square.mark = :O
-		expect(square === :O).to be_truthy
+		expect(square == :O).to be true
 	end
 
 end
