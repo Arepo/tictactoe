@@ -26,6 +26,14 @@ class Board
 
 	def display
 		rows.each {|row| puts row.to_s}
-	end	
+	end
+
+	def column(column_num)
+		(1..3).map {|row_num| row(row_num).square(column_num)}
+	end
+
+	def columns
+		rows.transpose
+	end
 
 end

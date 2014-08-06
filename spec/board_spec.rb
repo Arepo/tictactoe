@@ -16,5 +16,15 @@ describe Board do
 		expect{Board.new}.to raise_error
 	end
 
+	it 'can return a column' do
+		board.row(1).square(2).mark = :X
+		board.row(2).square(2).mark = :X
+		board.row(3).square(2).mark = :X
+		expect(board.column(2).all? {|square| square == :X}).to be true
+	end
+
+	it 'can return all three columns' do
+		expect(board.columns).to eq board.rows.transpose
+	end
 
 end

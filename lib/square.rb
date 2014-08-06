@@ -7,7 +7,8 @@ class Square
 	end
 
 	def to_s
-		mark.to_s
+		return mark.to_s if mark
+		"_"
 	end
 
 	private
