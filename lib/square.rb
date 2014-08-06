@@ -3,9 +3,11 @@ class Square
 	attr_accessor :mark
 
 	def ==(square_or_mark)
-		return false if mark == nil
 		return true if stringify(mark) == stringify(square_or_mark)[/^[XO]$/] 
-		return true if stringify(mark) == stringify(square_or_mark)
+	end
+
+	def to_s
+		mark.to_s
 	end
 
 	private
