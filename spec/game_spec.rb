@@ -23,11 +23,18 @@ describe Game do
 		expect(game.completed_row?).to be_falsy
 	end
 
-	it "can see when there are three consecutive marks in a row" do
+	it "can see when there are three consecutive marks in row 1" do
 		game.player2.play_on(game.board.row(1).square(1))
 		game.player2.play_on(game.board.row(1).square(2))
 		game.player2.play_on(game.board.row(1).square(3))
 		expect(game.completed_row?).to be true
 	end
 	
+	it "can see when there are three consecutive marks in row 3" do
+		game.player2.play_on(game.board.row(3).square(1))
+		game.player2.play_on(game.board.row(3).square(2))
+		game.player2.play_on(game.board.row(3).square(3))
+		expect(game.completed_row?).to be true
+	end
+
 end

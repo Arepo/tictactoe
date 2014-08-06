@@ -12,8 +12,14 @@ class Game
 
 	def completed_row?
 		board.rows.any? do |row|
-			return true if row.all? {|square| square == :X } || row.all? {|square| square == :O }
-			# return true if row.inject {|last_square, current_square| last_square == current_square}
+			equivalent_squares_in?(row)
+			# return true if row.all? {|square| square == :O }
+		end
+	end
+
+	def equivalent_squares_in?(squares)
+		return true if squares.inject do |last_square, this_square| 
+			last_square == this_square ? this_square : false 
 		end
 	end
 
