@@ -57,10 +57,19 @@ describe Game do
 	end
 
 	it "can see when there are three consecutive marks in column 3" do
-		game.player2.play_on(game.board.row(1).square(3))
-		game.player2.play_on(game.board.row(2).square(3))
-		game.player2.play_on(game.board.row(3).square(3))
+		fill_column(3)
 		expect(game.completed_column?).to be true
+	end
+
+	it "can see when neither diagonal has three consecutive marks" do
+		expect(game.completed_diagonal?).to be_falsy
+	end
+
+	it "can see when t/l to b/r diagonal has three consecutive marks" do
+		game.player2.play_on(game.board.row(1).square(1))
+		game.player2.play_on(game.board.row(2).square(2))
+		game.player2.play_on(game.board.row(3).square(3))
+		expect(game.completed_diagonal?).to be true
 	end
 
 	def fill_row(row_num)
@@ -68,6 +77,7 @@ describe Game do
 	end
 
 	def fill_column(column_num)
+		# Board.instance.rows.transpose
 		1.upto(3) {|square_num| game.player2.play_on(game.board.column(column_num).square(square_num)) }
 	end
 

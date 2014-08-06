@@ -14,4 +14,8 @@ class Player
 		square.mark = chosen_mark
 	end
 
+	# def row(num)
+	# 	board.row(num)
+	# end
+
 end
