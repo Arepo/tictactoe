@@ -51,22 +51,22 @@ describe Game do
 		expect(game.completed_row?).to be true
 	end
 
-	# it "can see when no column has three consective marks" do
-	# 	expect(game.completed_column?).to be_falsy
-	# end
+	it "can see when no column has three consective marks" do
+		expect(game.completed_column?).to be_falsy
+	end
 
-	# it "can see when there are three consecutive marks in column 1" do
-	# 	game.player2.play_on(game.board.row(1).square(1))
-	# 	game.player2.play_on(game.board.row(2).square(1))
-	# 	game.player2.play_on(game.board.row(3).square(1))
-	# 	expect(game.completed_column?).to be true
-	# end
+	it "can see when there are three consecutive marks in column 1" do
+		game.player2.play_on(game.board.row(1).square(1))
+		game.player2.play_on(game.board.row(2).square(1))
+		game.player2.play_on(game.board.row(3).square(1))
+		expect(game.completed_column?).to be true
+	end
 
-	# it "can see when there are three consecutive marks in column 3" do
-	# 	game.player2.play_on(game.board.row(1).square(3))
-	# 	game.player2.play_on(game.board.row(2).square(3))
-	# 	game.player2.play_on(game.board.row(3).square(3))
-	# 	expect(game.completed_column?).to be true
-	# end
+	it "can see when there are three consecutive marks in column 3" do
+		game.player2.play_on(game.board.row(1).square(3))
+		game.player2.play_on(game.board.row(2).square(3))
+		game.player2.play_on(game.board.row(3).square(3))
+		expect(game.completed_column?).to be true
+	end
 
 end

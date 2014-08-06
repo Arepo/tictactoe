@@ -29,7 +29,8 @@ class Board
 	end
 
 	def column(column_num)
-		(1..3).map {|row_num| row(row_num).square(column_num)}
+		rows.transpose[column_num - 1]
+		# (1..3).map {|row_num| row(row_num).square(column_num)}
 	end
 
 	def columns

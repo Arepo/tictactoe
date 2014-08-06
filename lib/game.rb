@@ -17,11 +17,11 @@ class Game
 		end
 	end
 
-	# def completed_column?
-	# 	[1..3].any? do |num|
-	# 		board.rows.map |row|
-	# 			row.square(num)
-	# end
+	def completed_column?
+		board.columns.any? do |column|
+			equivalent_squares_in?(column)
+		end
+	end
 
 	def equivalent_squares_in?(squares)
 		return true if squares.inject do |last_square, this_square| 
