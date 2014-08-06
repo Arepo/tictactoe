@@ -29,7 +29,7 @@ class Board
 	end
 
 	def column(column_num)
-		rows.transpose[column_num - 1]
+		columns[column_num - 1]
 		# (1..3).map {|row_num| row(row_num).square(column_num)}
 	end
 
@@ -37,4 +37,27 @@ class Board
 		rows.transpose
 	end
 
+	def diagonals
+		diagonal_lines = []
+		# [rows, columns].each do |lines|
+			# rows.each_with_index {|line, square_num| diagonal_lines << line[square_num] }
+			# columns.each_with_index {|line, square_num| diagonal_lines << line[square_num] }
+		# end
+		# diagonal = (1..3).map {|num| board.row(num).square(num) }
+		# equivalent_squares_in?(diagonal)
+		# diagonal_lines
+		# .partition {|square| diagonal_lines.find_index(square) < 3 }
+		reverse_num = 4
+		1.upto(3) do |num|
+			diagonal_lines << row(num).square(num)
+			diagonal_lines << row(num).square(reverse_num -= 1)
+		end
+
+		# 3.downto(1) {|num| diagonal_lines << row(num1).square(num2) }
+		
+		diagonal_lines.partition {|square| diagonal_lines.find_index(square) % 2 == 0 }
+	end
+
 end
+
+p Board.instance.diagonals

@@ -11,21 +11,16 @@ class Game
 	end
 
 	def completed_row?
-		board.rows.any? do |row|
-			equivalent_squares_in?(row)
-			# return true if row.all? {|square| square == :O }
-		end
+		board.rows.any? { |row| equivalent_squares_in?(row) }
+		# return true if row.all? {|square| square == :O }
 	end
 
 	def completed_column?
-		board.columns.any? do |column|
-			equivalent_squares_in?(column)
-		end
+		board.columns.any? { |column| equivalent_squares_in?(column) }
 	end
 
 	def completed_diagonal?
-		diagonal = (1..3).map {|num| board.row(num).square(num) }
-		equivalent_squares_in?(diagonal)
+		board.diagonals.any? { |diagonal| equivalent_squares_in?(diagonal) }
 	end
 
 	def equivalent_squares_in?(squares)
@@ -33,7 +28,5 @@ class Game
 			last_square == this_square ? this_square : false 
 		end
 	end
-
-
 
 end

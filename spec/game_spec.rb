@@ -72,6 +72,13 @@ describe Game do
 		expect(game.completed_diagonal?).to be true
 	end
 
+	it "can see when t/r to b/l diagonal has three consecutive marks" do
+		game.player2.play_on(game.board.row(1).square(3))
+		game.player2.play_on(game.board.row(2).square(2))
+		game.player2.play_on(game.board.row(3).square(1))
+		expect(game.completed_diagonal?).to be true
+	end
+
 	def fill_row(row_num)
 		1.upto(3) {|square_num| game.player2.play_on(game.board.row(row_num).square(square_num)) }
 	end
