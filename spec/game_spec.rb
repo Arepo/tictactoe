@@ -80,12 +80,11 @@ describe Game do
 	end
 
 	def fill_row(row_num)
-		1.upto(3) {|square_num| game.player2.play_on(game.board.row(row_num).square(square_num)) }
+		game.board.row(row_num).each {|square| square.mark = :O }
 	end
 
 	def fill_column(column_num)
-		# Board.instance.rows.transpose
-		1.upto(3) {|square_num| game.player2.play_on(game.board.column(column_num).square(square_num)) }
+		game.board.column(column_num).each {|square| square.mark = :O }
 	end
 
 end
