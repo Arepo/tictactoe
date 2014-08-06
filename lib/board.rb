@@ -17,7 +17,7 @@ class Board
 	end
 
 	def add_blank_row
-		Row.new(3) { Square.new }
+		Array.new(3) { Square.new }
 	end
 
 	def make_rows

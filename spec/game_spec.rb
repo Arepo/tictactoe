@@ -38,16 +38,12 @@ describe Game do
 	end
 
 	it "can see when there are three consecutive marks in row 1" do
-		game.player2.play_on(game.board.row(1).square(1))
-		game.player2.play_on(game.board.row(1).square(2))
-		game.player2.play_on(game.board.row(1).square(3))
+		fill_row(1)
 		expect(game.completed_row?).to be true
 	end
 	
 	it "can see when there are three consecutive marks in row 3" do
-		game.player2.play_on(game.board.row(3).square(1))
-		game.player2.play_on(game.board.row(3).square(2))
-		game.player2.play_on(game.board.row(3).square(3))
+		fill_row(3)
 		expect(game.completed_row?).to be true
 	end
 
@@ -56,9 +52,7 @@ describe Game do
 	end
 
 	it "can see when there are three consecutive marks in column 1" do
-		game.player2.play_on(game.board.row(1).square(1))
-		game.player2.play_on(game.board.row(2).square(1))
-		game.player2.play_on(game.board.row(3).square(1))
+		fill_column(1)
 		expect(game.completed_column?).to be true
 	end
 
@@ -67,6 +61,14 @@ describe Game do
 		game.player2.play_on(game.board.row(2).square(3))
 		game.player2.play_on(game.board.row(3).square(3))
 		expect(game.completed_column?).to be true
+	end
+
+	def fill_row(row_num)
+		1.upto(3) {|square_num| game.player2.play_on(game.board.row(row_num).square(square_num)) }
+	end
+
+	def fill_column(column_num)
+		1.upto(3) {|square_num| game.player2.play_on(game.board.column(column_num).square(square_num)) }
 	end
 
 end

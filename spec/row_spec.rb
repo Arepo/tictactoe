@@ -1,6 +1,6 @@
-require 'row.rb'
+require 'row'
 
-describe Row do
+describe 'row' do
 
 	let(:board){Board.instance}
 
