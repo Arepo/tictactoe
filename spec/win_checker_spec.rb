@@ -20,7 +20,7 @@ describe WinChecker do
 		expect(winchecker.equivalent_squares_in?(unmatching_squares)).to be_falsy
 	end
 
-	it "can check that there aren't three consecutive marks in a row" do
+	it "can check that there aren't three consecutive marks in any row" do
 		expect(winchecker.completed_row?).to be_falsy
 	end
 
@@ -63,8 +63,6 @@ describe WinChecker do
 		winchecker.board.row(1).square(3).mark = :O
 		winchecker.board.row(2).square(2).mark = :O
 		winchecker.board.row(3).square(1).mark = :O
-		# winchecker.player2.play_on(winchecker.board.row(2).square(2))
-		# winchecker.player2.play_on(winchecker.board.row(3).square(1))
 		expect(winchecker.completed_diagonal?).to be true
 	end
 
