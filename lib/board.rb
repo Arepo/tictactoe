@@ -38,13 +38,13 @@ class Board
 	end
 
 	def diagonals
-		diagonal_lines = []
+		diagonal_lines = [[],[]]
 		counter = 4
 		1.upto(3) do |num|
-			diagonal_lines << row(num).square(num)
-			diagonal_lines << row(num).square(counter -= 1)
+			diagonal_lines[0] << row(num).square(num)
+			diagonal_lines[1] << row(num).square(counter -= 1)
 		end
-		diagonal_lines.partition { (counter += 1) > 4 }
+		diagonal_lines
 	end
 
 end
