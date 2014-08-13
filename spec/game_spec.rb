@@ -23,6 +23,24 @@ describe Game do
 		expect(game.player2.board.row(1).square(2)).to eq :O
 	end
 
+	it "asks the player for the row they want to play on" do
+		expect(game).to receive(:puts).with "Which row would you like to play on (1, 2 or 3)?"
+		game.stub(:gets) {"1"}
+		expect(game).to receive(:gets).and_return "1"
+		game.get_row
+	end
 
+	it "asks the player for the square they want to play on" do
+		expect(game).to receive(:puts).with "And which square (1, 2 or 3)?"
+		game.stub(:gets) {"2"}
+		expect(game).to receive(:gets).and_return "1"
+		game.get_square
+	end
+
+	# it 'testing double' do
+	# 	player3 = double :player
+	# 	allow(player3).to receive(:play_on)
+	# 	game.prompt
+	# end
 
 end

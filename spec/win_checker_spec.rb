@@ -66,6 +66,10 @@ describe WinChecker do
 		expect(winchecker.completed_diagonal?).to be true
 	end
 
+	# it 'exits the program when it finds any of the above sets of three' do
+	# 	fill_row(1)
+	# end
+
 	def fill_row(row_num)
 		winchecker.board.row(row_num).each {|square| square.mark = :O }
 	end

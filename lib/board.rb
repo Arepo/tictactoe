@@ -48,5 +48,3 @@ class Board
 	end
 
 end
-
-p Board.instance.diagonals
