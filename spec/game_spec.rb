@@ -4,6 +4,7 @@ describe Game do
 
 	before do
     	Singleton.__init__(Board)
+    	Game.any_instance.stub(:number_of_humans).and_return(1)
   	end
 
 	let(:game){Game.new}
@@ -23,18 +24,17 @@ describe Game do
 		expect(game.player2.board.row(1).square(2)).to eq :O
 	end
 
-	it "asks the player for the row they want to play on" do
-		expect(game).to receive(:puts).with "Which row would you like to play on (1, 2 or 3)?"
-		game.stub(:gets) {"1"}
+	it 'asks the player whether they want a human opponent' do
+		expect(game).to receive(:puts).with "How many humans are playing (0, 1 or 2)?"
 		expect(game).to receive(:gets).and_return "1"
-		game.get_row
+		game.number_of_humans
 	end
 
-	it "asks the player for the square they want to play on" do
-		expect(game).to receive(:puts).with "And which square (1, 2 or 3)?"
-		game.stub(:gets) {"2"}
-		expect(game).to receive(:gets).and_return "1"
-		game.get_square
+	it 'creates as many AI players as required, always letting the human play first' do
+		allow(game).to receive(:gets).and_return "1"
+		game.number_of_humans
+		expect(game.player1).to respond_to :get_square
+		expect(game.player2).to respond_to :determine_square
 	end
 
 	# it 'testing double' do
