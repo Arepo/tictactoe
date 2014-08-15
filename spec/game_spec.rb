@@ -24,17 +24,18 @@ describe Game do
 		expect(game.player2.board.row(1).square(2)).to eq :O
 	end
 
-	it 'asks the player whether they want a human opponent' do
-		expect(game).to receive(:puts).with "How many humans are playing (0, 1 or 2)?"
-		expect(game).to receive(:gets).and_return "1"
-		game.number_of_humans
-	end
+	# it 'asks the player whether they want a human opponent' do
+	# 	expect(game).to receive(:puts).with "How many humans are playing (0, 1 or 2)?"
+	# 	expect(game).to receive(:gets).and_return "1"
+	# 	game.number_of_humans
+	# end
 
 	it 'creates as many AI players as required, always letting the human play first' do
-		allow(game).to receive(:gets).and_return "1"
-		game.number_of_humans
+		Game.any_instance.stub(:number_of_humans).and_return(1)
 		expect(game.player1).to respond_to :get_square
+		expect(game.player1).not_to respond_to :determine_square
 		expect(game.player2).to respond_to :determine_square
+		expect(game.player2).not_to respond_to :get_square
 	end
 
 	# it 'testing double' do
