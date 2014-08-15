@@ -8,9 +8,7 @@ class Game
 	include WinChecker
 
 	def initialize
-		number_of_humans.times
-		@player1 = Player.new
-		@player2 = Player.new(:O)
+		create_players
 	end
 
 	private
@@ -21,9 +19,9 @@ class Game
 	end
 
 	def create_players
-		case number_of_humans
+		case number_of_humans.to_i
 		when 0
-			@player1 = Player.new(human: false)
+			@player1 = Player.new(:X, human: false)
 			@player2 = Player.new(:O, human: false)
 		when 1
 			@player1 = Player.new

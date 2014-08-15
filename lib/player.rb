@@ -1,4 +1,5 @@
 require_relative 'board'
+require_relative 'joshua'
 require_relative 'human'
 
 class Player
@@ -6,13 +7,16 @@ class Player
 	attr_reader :chosen_mark
 	attr_reader :board
 
-	def initialize(chosen_mark = :X, human = true)
+	def initialize(chosen_mark = :X, player_type = {human: true})
 		@chosen_mark = chosen_mark
 		@board = Board.instance
-		if human
+		@player_type = player_type
+		if player_type[:human]
 			extend Human
+		else
+			extend Joshua
 		end
-		# human? ? include Human : include Joshua
+		# human ? extend Human : extend Joshua
 	end
 
 	def play_on(square)
