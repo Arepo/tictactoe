@@ -4,7 +4,8 @@ describe Game do
 
 	before do
     	Singleton.__init__(Board)
-    	Game.any_instance.stub(:number_of_humans).and_return(1)
+    	# Game.any_instance.stub(:number_of_humans).and_return(1)
+    	allow_any_instance_of(Game).to receive(:number_of_humans).and_return(1)
   	end
 
 	let(:game){Game.new}
@@ -31,7 +32,7 @@ describe Game do
 	# end
 
 	it 'creates as many AI players as required, always letting the human play first' do
-		Game.any_instance.stub(:number_of_humans).and_return(1)
+		allow_any_instance_of(Game).to receive(:number_of_humans).and_return(1)
 		expect(game.player1).to respond_to :get_square
 		expect(game.player1).not_to respond_to :determine_square
 		expect(game.player2).to respond_to :determine_square

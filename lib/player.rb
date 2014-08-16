@@ -16,7 +16,7 @@ class Player
 		else
 			extend Joshua
 		end
-		# human ? extend Human : extend Joshua
+		# player_type[:human] ? extend Human : extend Joshua # ternary operator doesn't work here?
 	end
 
 	def play_on(square)

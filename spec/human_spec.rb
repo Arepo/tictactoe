@@ -20,4 +20,10 @@ describe Human do
 		human.get_square
 	end
 
+	it "places their marker on that square when prompted" do
+		allow(human).to receive(:gets).and_return("2", "3")
+		allow(human).to receive(:play_on)
+		human.your_turn
+	end
+
 end

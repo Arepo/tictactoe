@@ -20,6 +20,4 @@ describe Player do
 		expect(inara.board).to be(malcolm.board)
 	end
 
-	
-	
 end

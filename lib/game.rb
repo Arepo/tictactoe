@@ -15,11 +15,11 @@ class Game
 
 	def number_of_humans
 		puts "How many humans are playing (0, 1 or 2)?"
-		gets.chomp
+		gets.chomp.to_i
 	end
 
 	def create_players
-		case number_of_humans.to_i
+		case number_of_humans
 		when 0
 			@player1 = Player.new(:X, human: false)
 			@player2 = Player.new(:O, human: false)
