@@ -2,14 +2,20 @@ require 'game'
 
 describe Game do 
 
+	def placate_game
+		Singleton.__init__(Board)
+		allow_any_instance_of(Game).to receive(:number_of_humans).and_return(2)
+		allow_any_instance_of(Player).to receive(:gets).and_return("1","2","3")
+		# Singleton.__init__(Board)
+		# allow_any_instance_of(Game).to receive(:number_of_humans).and_return(1)
+		# allow_any_instance_of(Game).to receive(:prompt)
+	end
+
 	context 'setup' do
 
 		before do
-	    	Singleton.__init__(Board)
-	    	# Game.any_instance.stub(:number_of_humans).and_return(1)
-	    	allow_any_instance_of(Game).to receive(:number_of_humans).and_return(1)
-	    	allow_any_instance_of(Game).to receive(:prompt)
-	  	end
+			placate_game
+		end
 
 		let(:game){Game.new}
 
@@ -36,10 +42,12 @@ describe Game do
 
 		it 'creates as many AI players as required, always letting the human play first' do
 			allow_any_instance_of(Game).to receive(:number_of_humans).and_return(1)
-			expect(game.player1).to respond_to :get_square
-			expect(game.player1).not_to respond_to :determine_square
-			expect(game.player2).to respond_to :determine_square
-			expect(game.player2).not_to respond_to :get_square
+			allow_any_instance_of(Player).to receive(:your_turn)
+			game2 = Game.new
+			expect(game2.player1).to respond_to :get_square
+			expect(game2.player1).not_to respond_to :determine_square
+			expect(game2.player2).to respond_to :determine_square
+			expect(game2.player2).not_to respond_to :get_square
 		end
 
 	end
@@ -47,10 +55,7 @@ describe Game do
 	context 'passing control between players' do
 
 		before do
-	    	Singleton.__init__(Board)
-	    	# Game.any_instance.stub(:number_of_humans).and_return(1)
-	    	allow_any_instance_of(Game).to receive(:number_of_humans).and_return(2)
-	    	allow_any_instance_of(Player).to receive(:gets).and_return("1","2","3")
+	    	placate_game
 	  	end
 
 		it 'immediately after creating the board, prompts player1' do
@@ -68,10 +73,12 @@ describe Game do
 
 	end
 
-	# it 'testing double' do
-	# 	player3 = double :player
-	# 	allow(player3).to receive(:play_on)
-	# 	game.prompt
-	# end
+	context 'ending the game' do
+
+		before do
+			placate_game
+		end
+
+	end
 
 end

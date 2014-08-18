@@ -66,9 +66,25 @@ describe WinChecker do
 		expect(winchecker.completed_diagonal?).to be true
 	end
 
-	# it 'exits the program when it finds any of the above sets of three' do
-	# 	fill_row(1)
-	# end
+	it "can check all orientations at once" do
+		expect(winchecker).to receive(:completed_row?)
+		expect(winchecker).to receive(:completed_column?)
+		expect(winchecker).to receive(:completed_diagonal?)
+		winchecker.completed_line?
+	end
+
+	it "can tell if any line has been completed" do
+		allow(winchecker).to receive(:completed_row?).and_return(true, false, false)
+		expect(winchecker.completed_line?).to be true
+		allow(winchecker).to receive(:completed_column?).and_return(true, false)
+		expect(winchecker.completed_line?).to be true
+		allow(winchecker).to receive(:completed_diagonal?).and_return(true)
+		expect(winchecker.completed_line?).to be true
+	end
+
+	it "can tell if no line has been completed" do
+		expect(winchecker.completed_line?).to be_falsy
+	end
 
 	def fill_row(row_num)
 		winchecker.board.row(row_num).each {|square| square.mark = :O }
