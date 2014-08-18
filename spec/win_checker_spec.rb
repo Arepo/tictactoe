@@ -1,4 +1,5 @@
 require 'game'
+require 'byebug'
 
 class CheckerContainer; include WinChecker; end
 

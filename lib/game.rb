@@ -9,6 +9,7 @@ class Game
 	include WinChecker
 
 	def initialize
+		super
 		create_players
 		run_game
 	end
@@ -16,7 +17,7 @@ class Game
 	def run_game
 		player1.your_turn
 		player2.your_turn
-		# completed_line?
+		completed_line? #initialize method not called in module
 	end
 
 	def display

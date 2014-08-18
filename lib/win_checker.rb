@@ -3,7 +3,6 @@ module WinChecker
 	attr_reader :board
 
 	def initialize
-		super
 		@board = Board.instance
 	end
 
