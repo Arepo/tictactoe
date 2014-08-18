@@ -1,5 +1,6 @@
 require_relative 'player'
 require_relative 'win_checker'
+# require 'byebug'
 
 class Game
 
@@ -9,6 +10,12 @@ class Game
 
 	def initialize
 		create_players
+		prompt
+	end
+
+	def prompt
+		player1.your_turn
+		player2.your_turn
 	end
 
 	private
