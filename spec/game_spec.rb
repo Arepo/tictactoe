@@ -50,7 +50,7 @@ describe Game do
 	    	Singleton.__init__(Board)
 	    	# Game.any_instance.stub(:number_of_humans).and_return(1)
 	    	allow_any_instance_of(Game).to receive(:number_of_humans).and_return(2)
-	    	allow_any_instance_of(Player).to receive(:gets).and_return("1")
+	    	allow_any_instance_of(Player).to receive(:gets).and_return("1","2","3")
 	  	end
 
 		it 'immediately after creating the board, prompts player1' do
@@ -58,7 +58,7 @@ describe Game do
 			Game.new
 		end
 
-		it 'prompting tells each player to take their turn, then repeats' do
+		it 'prompting tells each player to take their turn' do
 			# allow_any_instance_of(Game).to receive(:prompt).once
 			game = Game.new
 			expect(game.player1).to receive(:your_turn)

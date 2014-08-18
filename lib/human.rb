@@ -11,7 +11,7 @@ module Human
 	end
 
 	def your_turn
-		square_at(get_row, get_square)
+		play_on(square_at(get_row, get_square))
 	end
 
 end

@@ -18,6 +18,10 @@ class Game
 		player2.your_turn
 	end
 
+	def display
+		player1.board.display
+	end
+
 	private
 
 	def number_of_humans
@@ -38,5 +42,7 @@ class Game
 			@player2 = Player.new(:O)
 		end
 	end
+
+
 
 end
