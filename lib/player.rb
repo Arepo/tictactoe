@@ -23,6 +23,10 @@ class Player
 		square.mark = chosen_mark
 	end
 
+	def square_at(row_num, square_num)
+		board.row(row_num).square(square_num)
+	end
+
 	# def row(num)
 	# 	board.row(num)
 	# end

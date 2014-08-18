@@ -20,4 +20,9 @@ describe Player do
 		expect(inara.board).to be(malcolm.board)
 	end
 
+	it "can translates row/square coordinates into the square at them" do
+		expect(malcolm.square_at(1, 2)).to equal malcolm.board.row(1).square(2)
+		expect(malcolm.square_at(2, 3)).to equal malcolm.board.row(2).square(3)
+	end
+
 end

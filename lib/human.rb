@@ -10,4 +10,8 @@ module Human
 		chosen_square = gets.chomp.to_i
 	end
 
+	def your_turn
+		square_at(get_row, get_square)
+	end
+
 end

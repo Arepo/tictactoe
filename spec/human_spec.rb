@@ -21,8 +21,9 @@ describe Human do
 	end
 
 	it "places their marker on that square when prompted" do
-		allow(human).to receive(:gets).and_return("2", "3")
-		allow(human).to receive(:play_on)
+		expect(human).to receive(:get_row).and_return(1)
+		expect(human).to receive(:get_square).and_return(2)
+		expect(human).to receive(:square_at).with(1, 2)
 		human.your_turn
 	end
 
