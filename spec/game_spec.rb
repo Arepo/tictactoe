@@ -8,7 +8,7 @@ describe Game do
 		allow_any_instance_of(Player).to receive(:gets).and_return("1","2","3")
 		# Singleton.__init__(Board)
 		# allow_any_instance_of(Game).to receive(:number_of_humans).and_return(1)
-		# allow_any_instance_of(Game).to receive(:prompt)
+		# allow_any_instance_of(Game).to receive(:run_game)
 	end
 
 	context 'setup' do
@@ -58,17 +58,17 @@ describe Game do
 	    	placate_game
 	  	end
 
-		it 'immediately after creating the board, prompts player1' do
-			expect_any_instance_of(Game).to receive(:prompt)
+		it 'immediately after creating the board, run_games player1' do
+			expect_any_instance_of(Game).to receive(:run_game)
 			Game.new
 		end
 
-		it 'prompting tells each player to take their turn' do
-			# allow_any_instance_of(Game).to receive(:prompt).once
+		it 'run_gameing tells each player to take their turn' do
+			# allow_any_instance_of(Game).to receive(:run_game).once
 			game = Game.new
 			expect(game.player1).to receive(:your_turn)
 			expect(game.player2).to receive(:your_turn)
-			game.prompt
+			game.run_game
 		end
 
 	end
@@ -77,6 +77,12 @@ describe Game do
 
 		before do
 			placate_game
+		end
+
+		it 'after prompting each player, checks if the board has a completed line' do
+			game = Game.new
+			expect(game).to receive(:completed_line?)
+			game.run_game
 		end
 
 	end

@@ -10,12 +10,13 @@ class Game
 
 	def initialize
 		create_players
-		prompt
+		run_game
 	end
 
-	def prompt
+	def run_game
 		player1.your_turn
 		player2.your_turn
+		# completed_line?
 	end
 
 	def display
