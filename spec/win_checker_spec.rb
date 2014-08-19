@@ -99,13 +99,13 @@ describe WinChecker do
 		expect(winchecker).to receive(:completed_line?).and_return true
 		expect(winchecker).to receive(:puts).with "Game over. Someone who I'll hopefully remember to specify later has won."
 		expect(winchecker).to receive(:exit)
-		winchecker.game_over
+		winchecker.completion_check
 	end
 
 	it "doesn't terminate the game if no line has been completed" do
 		expect(winchecker).not_to receive(:puts)
 		expect(winchecker).not_to receive(:exit)
-		winchecker.game_over
+		winchecker.completion_check
 	end
 
 end

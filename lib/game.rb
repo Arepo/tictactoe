@@ -4,9 +4,9 @@ require_relative 'win_checker'
 
 class Game
 
-	attr_reader :player1, :player2
-
 	include WinChecker
+
+	attr_reader :player1, :player2
 
 	def initialize
 		super
@@ -16,8 +16,9 @@ class Game
 
 	def run_game
 		player1.your_turn
+		completion_check
 		player2.your_turn
-		completed_line?
+		completion_check
 	end
 
 	def display

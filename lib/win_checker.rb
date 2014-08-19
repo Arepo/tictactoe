@@ -22,7 +22,7 @@ module WinChecker
 		[completed_row?, completed_column?, completed_diagonal?].any? {|candidate| candidate }
 	end
 
-	def game_over
+	def completion_check
 		if completed_line?
 			puts "Game over. Someone who I'll hopefully remember to specify later has won."
 			exit

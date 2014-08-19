@@ -79,14 +79,16 @@ describe Game do
 			placate_game
 		end
 
+		let(:game){Game.new}
+
 		it 'after prompting each player, checks if the board has a completed line' do
-			game = Game.new
-			expect(game).to receive(:completed_line?)
+			expect(game).to receive(:completed_line?).twice
 			game.run_game
 		end
 
-		it 'terminates the game if it finds a completed line' do
-			
+		it "checks whether the game is over every time a player takes a turn" do
+			expect(game).to receive(:completion_check).twice
+			game.run_game
 		end
 
 	end
