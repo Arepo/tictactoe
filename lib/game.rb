@@ -17,7 +17,7 @@ class Game
 	def run_game
 		player1.your_turn
 		player2.your_turn
-		completed_line? #initialize method not called in module
+		completed_line?
 	end
 
 	def display

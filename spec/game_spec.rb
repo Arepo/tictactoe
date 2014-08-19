@@ -58,12 +58,12 @@ describe Game do
 	    	placate_game
 	  	end
 
-		it 'immediately after creating the board, run_games player1' do
+		it 'immediately after creating the board, prompts player1' do
 			expect_any_instance_of(Game).to receive(:run_game)
 			Game.new
 		end
 
-		it 'run_gameing tells each player to take their turn' do
+		it 'prompting tells each player to take their turn' do
 			# allow_any_instance_of(Game).to receive(:run_game).once
 			game = Game.new
 			expect(game.player1).to receive(:your_turn)
@@ -83,6 +83,10 @@ describe Game do
 			game = Game.new
 			expect(game).to receive(:completed_line?)
 			game.run_game
+		end
+
+		it 'terminates the game if it finds a completed line' do
+			
 		end
 
 	end

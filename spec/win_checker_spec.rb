@@ -5,6 +5,14 @@ class CheckerContainer; include WinChecker; end
 
 describe WinChecker do
 
+	def fill_row(row_num)
+		winchecker.board.row(row_num).each {|square| square.mark = :O }
+	end
+
+	def fill_column(column_num)
+		winchecker.board.column(column_num).each {|square| square.mark = :O }
+	end
+
 	let(:winchecker) {CheckerContainer.new}
 
 	before do
@@ -87,12 +95,17 @@ describe WinChecker do
 		expect(winchecker.completed_line?).to be_falsy
 	end
 
-	def fill_row(row_num)
-		winchecker.board.row(row_num).each {|square| square.mark = :O }
+	it "terminates the game if it knows a line has been completed" do
+		expect(winchecker).to receive(:completed_line?).and_return true
+		expect(winchecker).to receive(:puts).with "Game over. Someone who I'll hopefully remember to specify later has won."
+		expect(winchecker).to receive(:exit)
+		winchecker.game_over
 	end
 
-	def fill_column(column_num)
-		winchecker.board.column(column_num).each {|square| square.mark = :O }
+	it "doesn't terminate the game if no line has been completed" do
+		expect(winchecker).not_to receive(:puts)
+		expect(winchecker).not_to receive(:exit)
+		winchecker.game_over
 	end
 
 end

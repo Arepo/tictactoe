@@ -8,7 +8,6 @@ module WinChecker
 
 	def completed_row?
 		board.rows.any? { |row| equivalent_squares_in?(row) }
-		# return true if row.all? {|square| square == :O }
 	end
 
 	def completed_column?
@@ -21,6 +20,13 @@ module WinChecker
 
 	def completed_line?
 		[completed_row?, completed_column?, completed_diagonal?].any? {|candidate| candidate }
+	end
+
+	def game_over
+		if completed_line?
+			puts "Game over. Someone who I'll hopefully remember to specify later has won."
+			exit
+		end
 	end
 
 	def equivalent_squares_in?(squares)
