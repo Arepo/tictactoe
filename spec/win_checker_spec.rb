@@ -6,11 +6,11 @@ class CheckerContainer; include WinChecker; end
 describe WinChecker do
 
 	def fill_row(row_num)
-		winchecker.board.row(row_num).each {|square| square.mark = :O }
+		winchecker.board.row(row_num).each {|square| square.mark = Mark.new(:player1) }
 	end
 
 	def fill_column(column_num)
-		winchecker.board.column(column_num).each {|square| square.mark = :O }
+		winchecker.board.column(column_num).each {|square| square.mark = Mark.new(:player1) }
 	end
 
 	let(:winchecker) {CheckerContainer.new}

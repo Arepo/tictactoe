@@ -24,15 +24,15 @@ describe Game do
 			expect(game.player2.class).to eq Player
 		end
 
-		it 'the first of whom marks their squares with an X' do
-			game.player1.play_on(game.player1.board.row(1).square(2))
-			expect(game.player1.board.row(1).square(2)).to eq :X
-		end
+		# it 'the first of whom marks their squares with an X' do
+		# 	game.player1.play_on(game.player1.board.row(1).square(2))
+		# 	expect(game.player1.board.row(1).square(2)).to eq :X
+		# end
 
-		it 'the second of whom marks their squares with an O' do
-			game.player2.play_on(game.player2.board.row(1).square(2))
-			expect(game.player2.board.row(1).square(2)).to eq :O
-		end
+		# it 'the second of whom marks their squares with an O' do
+		# 	game.player2.play_on(game.player2.board.row(1).square(2))
+		# 	expect(game.player2.board.row(1).square(2)).to eq :O
+		# end
 
 		# it 'asks the player whether they want a human opponent' do
 		# 	expect(game).to receive(:puts).with "How many humans are playing (0, 1 or 2)?"

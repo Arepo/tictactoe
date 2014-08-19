@@ -1,9 +1,9 @@
 class Mark
 
-	attr_reader :origin
+	attr_reader :source
 
-	def initialize(origin)
-		@origin = origin
+	def initialize(source = nil)
+		@source = source
 	end
 
 end

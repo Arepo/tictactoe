@@ -2,13 +2,21 @@ class Square
 
 	attr_accessor :mark
 
+	def initialize
+		@mark = Mark.new
+	end
+
 	def ==(square_or_mark)
-		return true if stringify(mark) == stringify(square_or_mark)[/^[XO]$/] 
+		return true if (square_or_mark.source == mark.source) && mark.source
 	end
 
 	def to_s
 		return mark.to_s if mark
 		"_"
+	end
+
+	def source
+		mark.source
 	end
 
 	private

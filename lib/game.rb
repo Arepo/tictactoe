@@ -35,14 +35,14 @@ class Game
 	def create_players
 		case number_of_humans
 		when 0
-			@player1 = Player.new(:X, human: false)
-			@player2 = Player.new(:O, human: false)
+			@player1 = Player.new(human: false)
+			@player2 = Player.new(human: false)
 		when 1
 			@player1 = Player.new
-			@player2 = Player.new(:O, human: false)
+			@player2 = Player.new(human: false)
 		when 2
 			@player1 = Player.new
-			@player2 = Player.new(:O)
+			@player2 = Player.new
 		end
 	end
 
