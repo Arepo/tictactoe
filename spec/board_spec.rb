@@ -17,10 +17,11 @@ describe Board do
 	end
 
 	it 'can return a column' do
-		board.row(1).square(2).mark = :X
-		board.row(2).square(2).mark = :X
-		board.row(3).square(2).mark = :X
-		expect(board.column(2).all? {|square| square == :X}).to be true
+		mark = Mark.new(:me)
+		board.row(1).square(2).mark = mark
+		board.row(2).square(2).mark = mark
+		board.row(3).square(2).mark = mark
+		expect(board.column(2).all? {|square| square == mark}).to be true
 	end
 
 	it 'can return all three columns' do

@@ -61,17 +61,19 @@ describe WinChecker do
 		expect(winchecker.completed_diagonal?).to be_falsy
 	end
 
-	it "can see when t/l to b/r diagonal has three consecutive marks" do
-		winchecker.board.row(1).square(1).mark = :O
-		winchecker.board.row(2).square(2).mark = :O
-		winchecker.board.row(3).square(3).mark = :O
+	it "can see when t/l to b/r diagonal has three consecutive identical marks" do
+		mark = Mark.new(:me)
+		winchecker.board.row(1).square(1).mark = mark
+		winchecker.board.row(2).square(2).mark = mark
+		winchecker.board.row(3).square(3).mark = mark
 		expect(winchecker.completed_diagonal?).to be true
 	end
 
-	it "can see when t/r to b/l diagonal has three consecutive marks" do
-		winchecker.board.row(1).square(3).mark = :O
-		winchecker.board.row(2).square(2).mark = :O
-		winchecker.board.row(3).square(1).mark = :O
+	it "can see when t/r to b/l diagonal has three consecutive identical marks" do
+		mark = Mark.new(:me)
+		winchecker.board.row(1).square(3).mark = mark
+		winchecker.board.row(2).square(2).mark = mark
+		winchecker.board.row(3).square(1).mark = mark
 		expect(winchecker.completed_diagonal?).to be true
 	end
 
