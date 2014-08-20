@@ -11,8 +11,8 @@ class Square
 	end
 
 	def to_s
-		return mark.to_s if mark
-		"_"
+		return "_" unless mark.source
+		
 	end
 
 	def source

@@ -5,11 +5,11 @@ describe Square do
 	let(:board){Board.new}
 	let(:square){Square.new}
 
-	it 'starts with no source of the mark in it' do
+	it 'starts with a sourceless mark in it' do
 		expect(square.mark.source).to equal nil
 	end
 
-	it 'can place a character on itself' do
+	it 'can place a mark on itself' do
 		square.mark = :X
 		expect(square.mark).to eq :X
 	end
