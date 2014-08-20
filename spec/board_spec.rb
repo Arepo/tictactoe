@@ -21,7 +21,8 @@ describe Board do
 		board.row(1).square(2).mark = mark
 		board.row(2).square(2).mark = mark
 		board.row(3).square(2).mark = mark
-		expect(board.column(2).all? {|square| square == mark}).to be true
+		expect(board.column(2).length).to eq 3
+		expect(board.column(2).all? {|square| square.mark == mark}).to be true
 	end
 
 	it 'can return all three columns' do
