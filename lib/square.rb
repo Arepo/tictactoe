@@ -12,8 +12,8 @@ class Square
 	end
 
 	def to_s
-		return "_" unless mark.source
-
+		return "_" unless mark
+		
 	end
 
 	def source
