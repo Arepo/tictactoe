@@ -1,6 +1,6 @@
 class Mark
 
-	@mark_number = 1
+	@mark_number = 0
 
 	def self.mark_number
 		@mark_number
@@ -11,22 +11,22 @@ class Mark
 	end
 
 	def self.new(source = nil)
+		self.mark_number = self.mark_number + 1
 		super
-		# self.mark_number = self.mark_number + 1
 	end
 
-	attr_reader :source, :string
+	attr_reader :source, :player_mark
 
 	def initialize(source = nil)
 		@source = source
-		@string = player_mark
+		@player_mark = gauge_mark
 	end
 
 	def to_s
-		string
+		player_mark
 	end
 
-	def player_mark
+	def gauge_mark
 		return "X" if Mark.mark_number == 1
 		return "O" if Mark.mark_number == 2
 	end
