@@ -40,4 +40,8 @@ describe Square do
 		expect(square.mark).to eq :X
 	end
 
+	it "does not complete a player's turn if they try to overwrite an existing mark" do
+
+	end
+
 end

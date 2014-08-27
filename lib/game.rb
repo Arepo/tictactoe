@@ -15,10 +15,12 @@ class Game
 	end
 
 	def run_game
-		player1.your_turn
-		display
-		completion_check
-		player2.your_turn
+		run_turn_for(player1)
+		run_turn_for(player2)
+	end
+
+	def run_turn_for(player)
+		player.your_turn
 		display
 		completion_check
 	end
@@ -35,6 +37,7 @@ class Game
 	end
 
 	def create_players
+		# must be a better way of writing this
 		case number_of_humans
 		when 0
 			@player1 = Player.new(human: false)
