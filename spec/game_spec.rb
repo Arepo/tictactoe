@@ -2,22 +2,15 @@ require 'game'
 
 describe Game do 
 
-	def placate_game
+	before do
 		Singleton.__init__(Board)
 		allow_any_instance_of(Game).to receive(:number_of_humans).and_return(2)
 		allow_any_instance_of(Player).to receive(:gets).and_return("1","2","3")
-		# Singleton.__init__(Board)
-		# allow_any_instance_of(Game).to receive(:number_of_humans).and_return(1)
-		# allow_any_instance_of(Game).to receive(:run_game)
 	end
 
+	let(:game){Game.new}
+
 	context 'setup' do
-
-		before do
-			placate_game
-		end
-
-		let(:game){Game.new}
 
 		it 'has two players' do
 			expect(game.player1.class).to eq Player
@@ -54,10 +47,6 @@ describe Game do
 
 	context 'passing control between players' do
 
-		before do
-	    	placate_game
-	  	end
-
 		it 'immediately after creating the board, prompts player1' do
 			expect_any_instance_of(Game).to receive(:run_game)
 			Game.new
@@ -65,21 +54,18 @@ describe Game do
 
 		it 'prompting tells each player to take their turn' do
 			# allow_any_instance_of(Game).to receive(:run_game).once
-			game = Game.new
 			expect(game.player1).to receive(:your_turn)
 			expect(game.player2).to receive(:your_turn)
 			game.run_game
 		end
 
+		it "repeats the process if a player tries to choose an occupied square" do
+
+		end
+
 	end
 
 	context 'ending the game' do
-
-		before do
-			placate_game
-		end
-
-		let(:game){Game.new}
 
 		it 'after prompting each player, checks if the board has a completed line' do
 			expect(game).to receive(:completed_line?).twice
