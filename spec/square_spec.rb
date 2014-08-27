@@ -1,4 +1,5 @@
 require 'square'
+require 'byebug'
 
 describe Square do
 
@@ -20,6 +21,23 @@ describe Square do
 		square.mark = mark
 		other_square.mark = mark
 		expect(square == other_square).to be true
+	end
+
+	it 'its string version is an underscore if no player has marked it' do
+		expect(square.to_s).to eq "_"
+	end
+
+	it "displays the string version of its mark if a player has marked it" do
+		mark = double 
+		square.mark = mark
+		expect(mark).to receive(:to_s)
+		square.to_s
+	end
+
+	it "cannot have its mark changed once placed" do
+		square.mark = :X
+		square.mark = :O
+		expect(square.mark).to eq :X
 	end
 
 end

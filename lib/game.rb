@@ -16,8 +16,10 @@ class Game
 
 	def run_game
 		player1.your_turn
+		display
 		completion_check
 		player2.your_turn
+		display
 		completion_check
 	end
 

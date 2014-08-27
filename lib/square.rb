@@ -1,10 +1,12 @@
+require 'byebug'
+
 class Square
 
-	attr_accessor :mark
+	attr_reader :mark
 
-	# def initialize
-	# 	@mark = Mark.new
-	# end
+	def mark=(new_mark)
+		@mark = new_mark unless mark
+	end
 
 	def ==(other_square)
 		return false unless mark && other_square.mark
@@ -13,7 +15,7 @@ class Square
 
 	def to_s
 		return "_" unless mark
-		
+		mark.to_s
 	end
 
 	def source
