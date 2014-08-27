@@ -59,10 +59,6 @@ describe Game do
 			game.run_game
 		end
 
-		it "repeats the process if a player tries to choose an occupied square" do
-
-		end
-
 	end
 
 	context 'ending the game' do
