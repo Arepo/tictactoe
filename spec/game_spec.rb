@@ -65,11 +65,15 @@ describe Game do
 
 		it 'after prompting each player, checks if the board has a completed line' do
 			expect(game).to receive(:completed_line?).twice
+			allow(game.player1).to receive(:your_turn)
+			allow(game.player2).to receive(:your_turn)
 			game.run_game
 		end
 
 		it "checks whether the game is over every time a player takes a turn" do
 			expect(game).to receive(:completion_check).twice
+			allow(game.player1).to receive(:your_turn)
+			allow(game.player2).to receive(:your_turn)
 			game.run_game
 		end
 

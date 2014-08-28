@@ -1,4 +1,5 @@
 require 'human'
+require 'byebug'
 
 class HumanTest; include Human; end
 
@@ -26,7 +27,7 @@ describe Human do
 			expect(human).to receive(:get_row).and_return(1)
 			expect(human).to receive(:get_square).and_return(2)
 			expect(human).to receive(:square_at).with(1, 2)
-			allow(human).to receive(:play_on)
+			allow(human).to receive(:play_on).and_return(:square)
 			human.your_turn
 		end
 
@@ -34,13 +35,22 @@ describe Human do
 			allow(human).to receive(:get_row).and_return(1)
 			allow(human).to receive(:get_square).and_return(2)
 			allow(human).to receive(:square_at).with(1, 2).and_return(:square)
-			expect(human).to receive(:play_on).with(:square)
+			expect(human).to receive(:play_on).with(:square).and_return(:square)
 			human.your_turn
 		end
 
 		it "repeats the process if a player can't play on that square" do
-			allow(human).to receive(:play_on).and_return nil
-			expect(human).to receive(:your_turn).twice
+			# allow(human).to receive(:get_row).and_return(1)
+			# allow(human).to receive(:get_square).and_return(2)
+			# allow(human).to receive(:square_at).with(1, 2).and_return(:square)
+			# allow(human).to receive(:play_on).with(:square).and_return(:square)
+			# human.your_turn
+			allow(human).to receive(:get_row).and_return(1,2)
+			allow(human).to receive(:get_square).and_return(2,2)
+			allow(human).to receive(:square_at).with(1, 2).and_return(:nil)
+			allow(human).to receive(:square_at).with(2, 2).and_return(:square)
+			allow(human).to receive(:play_on).with(:square).and_return(:square)
+			expect(human).to receive(:play_on).twice
 			human.your_turn
 		end
 

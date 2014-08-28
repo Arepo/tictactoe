@@ -11,7 +11,7 @@ module Human
 	end
 
 	def your_turn
-		play_on(square_at(get_row, get_square))
+		your_turn unless play_on(square_at(get_row, get_square))
 	end
 
 end

@@ -20,7 +20,7 @@ class Player
 	end
 
 	def play_on(square)
-		square.mark = mark
+		square.try_to_mark(mark)
 	end
 
 	def square_at(row_num, square_num)

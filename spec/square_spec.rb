@@ -11,15 +11,26 @@ describe Square do
 	# end
 
 	it 'can place a mark on itself' do
-		square.mark = :X
+		square.try_to_mark(:X)
 		expect(square.mark).to eq :X
+	end
+
+	it "cannot have its mark changed once placed" do
+		square.try_to_mark(:X)
+		square.try_to_mark(:O)
+		expect(square.mark).to eq :X
+	end
+
+	it "will not acknowledge placement if something has already been placed there" do
+		square.try_to_mark(:X)
+		expect(square.try_to_mark(:O)).to eq nil
 	end
 
 	it "recognises == equality when its mark's source matches another square's mark's source" do
 		mark = Mark.new(:me)
 		other_square = Square.new
-		square.mark = mark
-		other_square.mark = mark
+		square.try_to_mark(mark)
+		other_square.try_to_mark(mark)
 		expect(square == other_square).to be true
 	end
 
@@ -29,15 +40,9 @@ describe Square do
 
 	it "displays the string version of its mark if a player has marked it" do
 		mark = double 
-		square.mark = mark
+		square.try_to_mark(mark)
 		expect(mark).to receive(:to_s)
 		square.to_s
-	end
-
-	it "cannot have its mark changed once placed" do
-		square.mark = :X
-		square.mark = :O
-		expect(square.mark).to eq :X
 	end
 
 	it "does not complete a player's turn if they try to overwrite an existing mark" do
