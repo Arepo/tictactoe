@@ -22,9 +22,16 @@ module WinChecker
 		[completed_row?, completed_column?, completed_diagonal?].any? {|candidate| candidate }
 	end
 
+	def board_full?
+		board.rows.all? { |row| row.all? {|square| square.mark } }
+	end
+
 	def completion_check
 		if completed_line?
 			puts "Game over. Someone who I'll hopefully remember to specify later has won."
+			exit
+		elsif board_full?
+			puts "A strange game. The only winning move is not to play. How about a nice game of chess?"
 			exit
 		end
 	end

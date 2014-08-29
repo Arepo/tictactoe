@@ -11,7 +11,7 @@ class Game
 	def initialize
 		super
 		create_players
-		run_game
+		display
 	end
 
 	def run_game
@@ -26,7 +26,9 @@ class Game
 	end
 
 	def display
+		puts "*" * 50
 		player1.board.display
+		puts "\n" + "*" * 50
 	end
 
 	private

@@ -6,6 +6,7 @@ describe Game do
 		Singleton.__init__(Board)
 		allow_any_instance_of(Game).to receive(:number_of_humans).and_return(2)
 		allow_any_instance_of(Player).to receive(:gets).and_return("1","2","3")
+		allow_any_instance_of(Game).to receive(:display)
 	end
 
 	let(:game){Game.new}
@@ -47,10 +48,10 @@ describe Game do
 
 	context 'passing control between players' do
 
-		it 'immediately after creating the board, prompts player1' do
-			expect_any_instance_of(Game).to receive(:run_game)
-			Game.new
-		end
+		# it 'immediately after creating the board, prompts player1' do
+		# 	expect_any_instance_of(Game).to receive(:run_game)
+		# 	Game.new
+		# end
 
 		it 'prompting tells each player to take their turn' do
 			# allow_any_instance_of(Game).to receive(:run_game).once

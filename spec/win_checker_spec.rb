@@ -110,4 +110,12 @@ describe WinChecker do
 		winchecker.completion_check
 	end
 
+	it "... unless all squares have been marked" do
+		(1..3).each {|num| fill_row(num)}
+		allow(winchecker).to receive(:completed_line?).and_return(false)
+		expect(winchecker).to receive(:puts).with "A strange game. The only winning move is not to play. How about a nice game of chess?"
+		expect(winchecker).to receive(:exit)
+		winchecker.completion_check
+	end
+
 end

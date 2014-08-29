@@ -5,6 +5,10 @@ class HumanTest; include Human; end
 
 describe Human do
 
+	before do
+		allow_any_instance_of(Human).to receive(:puts)
+	end
+
 	let(:human) {HumanTest.new}
 
 	context "on a human's turn" do
