@@ -45,8 +45,4 @@ describe Square do
 		square.to_s
 	end
 
-	it "does not complete a player's turn if they try to overwrite an existing mark" do
-
-	end
-
 end

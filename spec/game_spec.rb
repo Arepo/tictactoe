@@ -54,9 +54,14 @@ describe Game do
 		# end
 
 		it 'prompting tells each player to take their turn' do
-			# allow_any_instance_of(Game).to receive(:run_game).once
-			expect(game.player1).to receive(:your_turn)
-			expect(game.player2).to receive(:your_turn)
+			expect(game.player1).to receive(:your_turn).ordered
+			expect(game.player2).to receive(:your_turn).ordered
+			game.run_game
+		end
+
+		it "before doing so states which player it's about to address" do
+			expect(game).to receive(:print).with("Player 1: ").ordered
+			expect(game).to receive(:print).with("Player 2: ").ordered
 			game.run_game
 		end
 
