@@ -26,16 +26,6 @@ module WinChecker
 		board.rows.all? { |row| row.all? {|square| square.mark } }
 	end
 
-	def completion_check
-		if completed_line?
-			puts "Game over. Someone who I'll hopefully remember to specify later has won."
-			exit
-		elsif board_full?
-			puts "A strange game. The only winning move is not to play. How about a nice game of chess?"
-			exit
-		end
-	end
-
 	def equivalent_squares_in?(squares)
 		# squares.map(&:owner).uniq.length == 1
 		return true if squares.inject do |last_square, this_square| 

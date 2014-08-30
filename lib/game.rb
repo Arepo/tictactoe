@@ -1,6 +1,5 @@
 require_relative 'player'
 require_relative 'win_checker'
-# require 'byebug'
 
 class Game
 
@@ -22,13 +21,23 @@ class Game
 	def run_turn_for(player)
 		player.your_turn
 		display
-		completion_check
+		completion_check_for(player)
 	end
 
 	def display
-		puts "*" * 50
+		puts "*" * 50 + "\n"
 		player1.board.display
 		puts "\n" + "*" * 50
+	end
+
+	def completion_check_for(player = nil)
+		if completed_line?
+			puts "Congratulations #{player == player1 ? "Player 1" : "Player 2"}. Your victory will be immortalised by the bards!"
+			exit
+		elsif board_full?
+			puts "A strange game. The only winning move is not to play. How about a nice game of chess?"
+			exit
+		end
 	end
 
 	private
@@ -52,7 +61,5 @@ class Game
 			@player2 = Player.new
 		end
 	end
-
-
 
 end

@@ -97,25 +97,9 @@ describe WinChecker do
 		expect(winchecker.completed_line?).to be_falsy
 	end
 
-	it "terminates the game if it knows a line has been completed" do
-		expect(winchecker).to receive(:completed_line?).and_return true
-		expect(winchecker).to receive(:puts).with "Game over. Someone who I'll hopefully remember to specify later has won."
-		expect(winchecker).to receive(:exit)
-		winchecker.completion_check
-	end
-
-	it "doesn't terminate the game if no line has been completed" do
-		expect(winchecker).not_to receive(:puts)
-		expect(winchecker).not_to receive(:exit)
-		winchecker.completion_check
-	end
-
-	it "... unless all squares have been marked" do
+	it "can tell if all squares are full" do
 		(1..3).each {|num| fill_row(num)}
-		allow(winchecker).to receive(:completed_line?).and_return(false)
-		expect(winchecker).to receive(:puts).with "A strange game. The only winning move is not to play. How about a nice game of chess?"
-		expect(winchecker).to receive(:exit)
-		winchecker.completion_check
+		expect(winchecker.board_full?).to be true
 	end
 
 end
