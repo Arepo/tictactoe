@@ -4,11 +4,11 @@ describe Board do
 
 	let(:board){Board.instance}
 
-	it 'can create a three-column row' do
+	it 'can create a row' do
 		expect(board.add_blank_row.length).to eq 3
 	end
 
-	it 'starts off by doing so three times' do
+	it 'starts off by doing so three times by default' do
 		expect(board.row(3).length).to eq 3
 	end
 

@@ -3,6 +3,8 @@ require 'singleton'
 
 class Board
 
+	EdgeLength = 3
+
 	include Singleton
 
 	attr_reader :rows
@@ -17,11 +19,11 @@ class Board
 	end
 
 	def add_blank_row
-		Array.new(3) { Square.new }
+		Array.new(EdgeLength) { Square.new }
 	end
 
 	def make_rows
-		3.times {rows << add_blank_row}
+		EdgeLength.times {rows << add_blank_row}
 	end
 
 	def display
@@ -30,7 +32,6 @@ class Board
 
 	def column(column_num)
 		columns[column_num - 1]
-		# (1..3).map {|row_num| row(row_num).square(column_num)}
 	end
 
 	def columns
@@ -40,7 +41,7 @@ class Board
 	def diagonals
 		diagonal_lines = [[],[]]
 		counter = 4
-		1.upto(3) do |num|
+		1.upto(EdgeLength) do |num|
 			diagonal_lines[0] << row(num).square(num)
 			diagonal_lines[1] << row(num).square(counter -= 1)
 		end
