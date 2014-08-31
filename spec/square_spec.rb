@@ -11,27 +11,28 @@ describe Square do
 	# end
 
 	it 'can place a mark on itself' do
-		square.try_to_mark(:X)
+		square.mark_with(:X)
 		expect(square.mark).to eq :X
 	end
 
 	it "cannot have its mark changed once placed" do
-		square.try_to_mark(:X)
-		square.try_to_mark(:O)
+		square.mark_with(:X)
+		square.mark_with(:O)
 		expect(square.mark).to eq :X
 	end
 
 	it "will not acknowledge placement if something has already been placed there" do
-		square.try_to_mark(:X)
-		expect(square.try_to_mark(:O)).to eq nil
+		square.mark_with(:X)
+		expect(square.mark_with(:O)).to eq nil
 	end
 
-	it "recognises == equality when its mark's source matches another square's mark's source" do
+	it "recognises == and eql? equality when its mark's source matches another square's mark's source" do
 		mark = Mark.new(:me)
 		other_square = Square.new
-		square.try_to_mark(mark)
-		other_square.try_to_mark(mark)
+		square.mark_with(mark)
+		other_square.mark_with(mark)
 		expect(square == other_square).to be true
+		expect(square.eql? other_square).to be true
 	end
 
 	it 'its string version is an underscore if no player has marked it' do
@@ -40,9 +41,17 @@ describe Square do
 
 	it "displays the string version of its mark if a player has marked it" do
 		mark = double 
-		square.try_to_mark(mark)
+		square.mark_with(mark)
 		expect(mark).to receive(:to_s)
 		square.to_s
+	end
+
+	xit "can compare squares by the string version of their marks" do
+		square.mark_with(:x)
+		square2 = Square.new
+		square2.mark_with(:o)
+		square3 = Square.new
+		expect([square, square2, square3])
 	end
 
 end

@@ -6,11 +6,11 @@ class CheckerContainer; include WinChecker; end
 describe WinChecker do
 
 	def fill_row(row_num)
-		winchecker.board.row(row_num).each {|square| square.try_to_mark(Mark.new(:player1)) }
+		winchecker.board.row(row_num).each {|square| square.mark_with(Mark.new(:player1)) }
 	end
 
 	def fill_column(column_num)
-		winchecker.board.column(column_num).each {|square| square.try_to_mark(Mark.new(:player1)) }
+		winchecker.board.column(column_num).each {|square| square.mark_with(Mark.new(:player1)) }
 	end
 
 	let(:winchecker) {CheckerContainer.new}
@@ -20,7 +20,7 @@ describe WinChecker do
   	end
 
 	it 'can recognise when three squares bear the same mark' do
-		matching_squares = Array.new(3) {Square.new.try_to_mark(:X) }
+		matching_squares = Array.new(3) {Square.new.mark_with(:X) }
 		expect(winchecker.equivalent_squares_in?(matching_squares)).to be true
 	end
 
@@ -63,17 +63,17 @@ describe WinChecker do
 
 	it "can see when t/l to b/r diagonal has three consecutive identical marks" do
 		mark = Mark.new(:me)
-		winchecker.board.row(1).square(1).try_to_mark mark
-		winchecker.board.row(2).square(2).try_to_mark mark
-		winchecker.board.row(3).square(3).try_to_mark mark
+		winchecker.board.row(1).square(1).mark_with mark
+		winchecker.board.row(2).square(2).mark_with mark
+		winchecker.board.row(3).square(3).mark_with mark
 		expect(winchecker.completed_diagonal?).to be true
 	end
 
 	it "can see when t/r to b/l diagonal has three consecutive identical marks" do
 		mark = Mark.new(:me)
-		winchecker.board.row(1).square(3).try_to_mark mark
-		winchecker.board.row(2).square(2).try_to_mark mark
-		winchecker.board.row(3).square(1).try_to_mark mark
+		winchecker.board.row(1).square(3).mark_with mark
+		winchecker.board.row(2).square(2).mark_with mark
+		winchecker.board.row(3).square(1).mark_with mark
 		expect(winchecker.completed_diagonal?).to be true
 	end
 

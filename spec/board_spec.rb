@@ -18,9 +18,9 @@ describe Board do
 
 	it 'can return a column' do
 		mark = Mark.new(:me)
-		board.row(1).square(2).try_to_mark mark
-		board.row(2).square(2).try_to_mark mark
-		board.row(3).square(2).try_to_mark mark
+		board.row(1).square(2).mark_with mark
+		board.row(2).square(2).mark_with mark
+		board.row(3).square(2).mark_with mark
 		expect(board.column(2).length).to eq 3
 		expect(board.column(2).all? {|square| square.mark == mark}).to be true
 	end

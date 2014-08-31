@@ -63,7 +63,7 @@ describe Human do
 			# allow(human).to receive(:play_on).with(any_args()).and_return(nil, :square)
 			# allow(human).to receive(:square_at).with(any_args())
 			expect(human).to receive(:play_on).twice
-			expect(human).to receive(:puts).with "Please make sure you choose an empty square."
+			expect(human).to receive(:puts).with "Please make sure you choose an empty space."
 			human.your_turn
 		end
 

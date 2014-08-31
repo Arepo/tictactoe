@@ -14,7 +14,7 @@ module Human
 
 	def your_turn
 		unless play_on(square_at(get_row, get_square))
-			puts "Please make sure you choose an empty square."
+			puts "Please make sure you choose an empty space."
 			your_turn
 		end
 	end

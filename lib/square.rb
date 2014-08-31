@@ -2,7 +2,7 @@ class Square
 
 	attr_reader :mark
 
-	def try_to_mark(new_mark)
+	def mark_with(new_mark)
 		@mark = new_mark unless mark
 	end
 
@@ -14,6 +14,10 @@ class Square
 	def ==(other_square)
 		return false unless mark && other_square.mark
 		return true if (other_square.source == mark.source) 
+	end
+
+	def eql?(other_square)
+		self == (other_square)
 	end
 
 	def to_s
