@@ -34,17 +34,27 @@ describe Joshua do
 	# end
 
 	it "can tell if a set of three squares has exactly two that == each other, and considers it top priority" do
-		expect(joshua.priority_1?(mark1, mark1, mark2)).to eq true
+		expect(joshua.priority_1?(mark1, mark1, mark2)).to be true
 		expect(joshua.priority_1?(mark1, mark2, mark0)).to be_falsy
 		expect(joshua.priority_1?(mark1, mark1, mark1)).to be_falsy
 		expect(joshua.priority_1?(mark0, mark0, mark0)).to be_falsy
+		expect(joshua.priority_1?(mark0, mark0, mark1)).to be_falsy
 	end
 
 	it "can tell if a set of three squares has exactly 1 square marked, and considers it second priority" do
-		expect(joshua.priority_2?(mark1, mark0, mark0)).to eq true
+		expect(joshua.priority_2?(mark1, mark0, mark0)).to be true
 		expect(joshua.priority_2?(mark1, mark1, mark0)).to be_falsy
 		expect(joshua.priority_2?(mark1, mark2, mark0)).to be_falsy
 		expect(joshua.priority_2?(mark0, mark0, mark0)).to be_falsy
+	end
+
+	it "can tell how many times a square features in multiple sets of squares" do
+		row1 = [:square1, :circle, :circle]
+		row2 = [:square2, :circle, :circle]
+		row3 = [:circle, :square2, :circle]
+		joshua.candidate_rows = [row1, row2, row3]
+		expect(joshua.appearances_of(:square1)).to eq 1
+		expect(joshua.appearances_of(:square2)).to eq 2
 	end
 
 	xit "picks a square from three that doesn't match the other two" do
