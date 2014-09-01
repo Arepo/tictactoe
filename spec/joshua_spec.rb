@@ -9,9 +9,10 @@ describe Joshua do
 	end
 
 	let(:joshua) {JoshuaTest.new}
+	let(:mark0) {double :mark, mark: nil}
 	let(:mark1) {double :mark, mark: :x}
 	let(:mark2) {double :mark, mark: :o}
-	let(:mark3) {double :mark, mark: nil}
+	
 
 	xit "specifies the row and square it's going to play on" do
 		expect(joshua.determine_square.class).to eq Array
@@ -32,17 +33,25 @@ describe Joshua do
 	# 	joshua.check_rows
 	# end
 
-	it "can tell if a set of three squares have exactly two that == each other" do
+	it "can tell if a set of three squares has exactly two that == each other, and considers it top priority" do
 		expect(joshua.priority_1?(mark1, mark1, mark2)).to eq true
-		expect(joshua.priority_1?(mark1, mark2, mark3)).to be_falsy
+		expect(joshua.priority_1?(mark1, mark2, mark0)).to be_falsy
 		expect(joshua.priority_1?(mark1, mark1, mark1)).to be_falsy
+		expect(joshua.priority_1?(mark0, mark0, mark0)).to be_falsy
+	end
+
+	it "can tell if a set of three squares has exactly 1 square marked, and considers it second priority" do
+		expect(joshua.priority_2?(mark1, mark0, mark0)).to eq true
+		expect(joshua.priority_2?(mark1, mark1, mark0)).to be_falsy
+		expect(joshua.priority_2?(mark1, mark2, mark0)).to be_falsy
+		expect(joshua.priority_2?(mark0, mark0, mark0)).to be_falsy
 	end
 
 	xit "picks a square from three that doesn't match the other two" do
-		expect(joshua.pick_candidate(:square1, :square1, :square2)).to eq :square2
-		expect(joshua.pick_candidate(:square1, :square2, :square2)).to eq :square1
-		expect(joshua.pick_candidate(:square2, :square2, :square2)).to eq nil
-		expect(joshua.pick_candidate(:square1, :square2, :square3)).to eq nil
+		expect(joshua.pick_candidate(mark1, mark1, mark2)).to eq mark2
+		expect(joshua.pick_candidate(mark2, mark2, mark1)).to eq mark1
+		expect(joshua.pick_candidate(mark2, mark2, mark2)).to eq nil
+		expect(joshua.pick_candidate(mark1, mark2, mark0)).to eq nil
 	end
 
 end
