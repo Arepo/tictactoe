@@ -12,7 +12,7 @@ module Joshua
 	# end
 
 	def priority_1?(*squares)
-		true if squares[0] == squares[1] || squares[0] == squares[2] || squares[1] == squares[2] 
+		true if squares.uniq { |square| square.mark }.length == 2
 	end
 
 	def pick_candidate(*squares)

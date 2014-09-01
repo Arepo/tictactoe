@@ -16,9 +16,9 @@ class Square
 		return true if (other_square.source == mark.source) 
 	end
 
-	def eql?(other_square)
-		self == (other_square)
-	end
+	# def eql?(other_square)
+	# 	self == (other_square)
+	# end
 
 	def to_s
 		return "_" unless mark

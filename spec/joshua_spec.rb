@@ -9,6 +9,9 @@ describe Joshua do
 	end
 
 	let(:joshua) {JoshuaTest.new}
+	let(:mark1) {double :mark, mark: :x}
+	let(:mark2) {double :mark, mark: :o}
+	let(:mark3) {double :mark, mark: nil}
 
 	xit "specifies the row and square it's going to play on" do
 		expect(joshua.determine_square.class).to eq Array
@@ -30,9 +33,9 @@ describe Joshua do
 	# end
 
 	it "can tell if a set of three squares have exactly two that == each other" do
-		expect(joshua.priority_1?(:square1, :square1, :square2)).to eq true
-		expect(joshua.priority_1?(:square2, :square2, :square2)).to be_falsy
-		expect(joshua.priority_1?(:square1, :square2, :square3)).to be_falsy
+		expect(joshua.priority_1?(mark1, mark1, mark2)).to eq true
+		expect(joshua.priority_1?(mark1, mark2, mark3)).to be_falsy
+		expect(joshua.priority_1?(mark1, mark1, mark1)).to be_falsy
 	end
 
 	xit "picks a square from three that doesn't match the other two" do
