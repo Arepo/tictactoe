@@ -41,9 +41,9 @@ module Joshua
 	end
 
 	def pick_lines
-		rows.each {|row| priority_1_lines.push(row) if priority_1?(row) }
-		columns.each {|column| priority_1_lines.push(column) if priority_1?(column) }
-		diagonals.each {|diagonal| priority_1_lines.push(diagonal) if priority_1?(diagonal) }
+		prioritise_from(rows)
+		prioritise_from(columns)
+		prioritise_from(diagonals)
 	end
 
 	def determine_square
@@ -60,6 +60,10 @@ module Joshua
 
 	def diagonals
 		board.diagonals
+	end
+
+	def prioritise_from(lines)
+		lines.each {|line| priority_1_lines.push(line) if priority_1?(line) }
 	end
 
 end
