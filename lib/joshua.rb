@@ -22,8 +22,12 @@ module Joshua
 
 	def appearances_of(square)
 		candidate_rows.inject(0) do |appearances, row|
-			row.include?(square) ? appearances + 1 : appearances 
+			row.include?(square) ? appearances + 1 : appearances
 		end
+	end
+
+	def full_row?(*squares)
+		squares.all? {|square| square.mark }
 	end
 
 	def pick_candidate(*squares)

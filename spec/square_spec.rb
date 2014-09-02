@@ -46,12 +46,12 @@ describe Square do
 		square.to_s
 	end
 
-	xit "can compare squares by the string version of their marks" do
-		square.mark_with(:x)
-		square2 = Square.new
-		square2.mark_with(:o)
-		square3 = Square.new
-		expect([square, square2, square3])
-	end
+	# xit "can compare squares by the string version of their marks" do
+	# 	square.mark_with(:x)
+	# 	square2 = Square.new
+	# 	square2.mark_with(:o)
+	# 	square3 = Square.new
+	# 	expect([square, square2, square3])
+	# end
 
 end
