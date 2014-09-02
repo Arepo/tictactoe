@@ -86,12 +86,28 @@ describe Joshua do
 		expect(joshua.columns).to eq(joshua.board.columns)
 	end
 
-	xit "looks through all the lines, and records those which are priority 1" do
-		expect(joshua).to receive(:diagonals)
-		expect(joshua).to receive(:rows)
-		expect(joshua).to receive(:columns)
-		expect(joshua).to receive(:priority_1?)
+	it "looks through all the lines, and doesn't record any as priority 1 if none are." do
+		expect(joshua).to receive(:priority_1?).exactly(8).times.and_return(false)
 		joshua.pick_lines
+		expect(joshua.priority_1_lines.length).to eq 0
+	end
+
+	it "looks through all the lines and records (the) one if one priority 1" do
+		allow(joshua).to receive(:priority_1?).exactly(8).times.and_return(true, false, 
+		false, false, false, false, false, false)
+		joshua.pick_lines
+		expect(joshua.priority_1_lines.length).to eq 1
+		expect(joshua.priority_1_lines).to include(joshua.board.row(1))
+	end
+
+	it "looks through all the lines and records each one if one priority 1" do
+		allow(joshua).to receive(:priority_1?).exactly(8).times.and_return(false, true, 
+		false, false, true, false, true, false)
+		joshua.pick_lines
+		expect(joshua.priority_1_lines.length).to eq 3
+		expect(joshua.priority_1_lines).to include(joshua.board.row(2))
+		expect(joshua.priority_1_lines).to include(joshua.board.column(2))
+		expect(joshua.priority_1_lines).to include(joshua.board.diagonals.first)
 	end
 
 end

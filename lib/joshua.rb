@@ -3,6 +3,10 @@ module Joshua
 	attr_reader :board
 	attr_accessor :candidate_rows
 
+	def priority_1_lines
+		@priority_1_lines ||= []
+	end
+
 	def initialize
 		@board = Board.instance
 	end
@@ -37,9 +41,9 @@ module Joshua
 	end
 
 	def pick_lines
-		board.columns
-		board.rows
-		board.diagonals
+		rows.each {|row| priority_1_lines.push(row) if priority_1?(row) }
+		columns.each {|column| priority_1_lines.push(column) if priority_1?(column) }
+		diagonals.each {|diagonal| priority_1_lines.push(diagonal) if priority_1?(diagonal) }
 	end
 
 	def determine_square
