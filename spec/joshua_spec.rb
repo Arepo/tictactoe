@@ -33,15 +33,18 @@ describe Joshua do
 	# 	joshua.check_rows
 	# end
 
-	it "can tell if a set of three squares has exactly two that == each other, and considers it top priority" do
-		expect(joshua.priority_1?(square1, square1, square2)).to be true
+	it "can tell if a set of three squares has exactly two marked, that == each other,
+		and considers it top priority" do
+		expect(joshua.priority_1?(square1, square1, square2)).to be_falsy
 		expect(joshua.priority_1?(square1, square2, square0)).to be_falsy
 		expect(joshua.priority_1?(square1, square1, square1)).to be_falsy
 		expect(joshua.priority_1?(square0, square0, square0)).to be_falsy
 		expect(joshua.priority_1?(square0, square0, square1)).to be_falsy
+		expect(joshua.priority_1?(square0, square2, square2)).to be true
 	end
 
-	it "can tell if a set of three squares has exactly 1 square marked, and considers it second priority" do
+	it "can tell if a set of three squares has exactly 1 square marked, 
+		and considers it second priority" do
 		expect(joshua.priority_2?(square1, square0, square0)).to be true
 		expect(joshua.priority_2?(square1, square1, square0)).to be_falsy
 		expect(joshua.priority_2?(square1, square2, square0)).to be_falsy
@@ -58,17 +61,37 @@ describe Joshua do
 	end
 
 	it "can tell if a set of squares is full" do
-		expect(joshua.full_row?(square1, square1, square0)).to be_falsy
-		expect(joshua.full_row?(square1, square1, square1)).to be true
-		expect(joshua.full_row?(square1, square2, square0)).to be_falsy
-		expect(joshua.full_row?(square2, square2, square2)).to be true
+		expect(joshua.line_full?(square1, square1, square0)).to be_falsy
+		expect(joshua.line_full?(square1, square1, square1)).to be true
+		expect(joshua.line_full?(square1, square2, square0)).to be_falsy
+		expect(joshua.line_full?(square2, square2, square2)).to be true
 	end
 
-	xit "selects the empty square from a set of three" do
-		expect(joshua.pick_candidate(square1, square1, square0)).to eq square0
-		expect(joshua.pick_candidate(square2, square2, square0)).to eq square0
-		expect(joshua.pick_candidate(square2, square2, square2)).to eq nil
-		expect(joshua.pick_candidate(square1, square2, square0)).to eq square0
+	it "selects the empty square from a set of three" do
+		expect(joshua.pick_candidates(square1, square1, square0)).to eq [square0]
+		expect(joshua.pick_candidates(square2, square2, square0)).to eq [square0]
+		expect(joshua.pick_candidates(square2, square2, square2)).to eq []
+		expect(joshua.pick_candidates(square1, square2, square0)).to eq [square0]
+	end
+
+	it "can look at the board's rows" do
+		expect(joshua.rows).to eq(joshua.board.rows)
+	end
+
+	it "can look at the board's diagonals" do
+		expect(joshua.diagonals).to eq(joshua.board.diagonals)
+	end
+
+	it "can look at the board's columns" do
+		expect(joshua.columns).to eq(joshua.board.columns)
+	end
+
+	xit "looks through all the lines, and records those which are priority 1" do
+		expect(joshua).to receive(:diagonals)
+		expect(joshua).to receive(:rows)
+		expect(joshua).to receive(:columns)
+		expect(joshua).to receive(:priority_1?)
+		joshua.pick_lines
 	end
 
 end
