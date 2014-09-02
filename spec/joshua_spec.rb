@@ -12,6 +12,10 @@ describe Joshua do
 	let(:square0) {double :square, mark: nil}
 	let(:square1) {double :square, mark: :x}
 	let(:square2) {double :square, mark: :o}
+
+	def no_priority_twos
+		allow(joshua).to receive(:priority_2?).exactly(8).times.and_return(false)
+	end
 	
 
 	xit "specifies the row and square it's going to play on" do
@@ -86,28 +90,41 @@ describe Joshua do
 		expect(joshua.columns).to eq(joshua.board.columns)
 	end
 
-	it "looks through all the lines, and doesn't record any as priority 1 if none are." do
+	it "looks through all the lines, and doesn't record any as priority 1 or 
+		priority 2 if none are." do
 		expect(joshua).to receive(:priority_1?).exactly(8).times.and_return(false)
-		joshua.pick_lines
+		expect(joshua).to receive(:priority_2?).exactly(8).times.and_return(false)
+		joshua.prioritise_lines
 		expect(joshua.priority_1_lines.length).to eq 0
 	end
 
 	it "looks through all the lines and records (the) one if one priority 1" do
 		allow(joshua).to receive(:priority_1?).exactly(8).times.and_return(true, false, 
-		false, false, false, false, false, false)
-		joshua.pick_lines
+												false, false, false, false, false, false)
+		no_priority_twos
+		joshua.prioritise_lines
 		expect(joshua.priority_1_lines.length).to eq 1
 		expect(joshua.priority_1_lines).to include(joshua.board.row(1))
 	end
 
-	it "looks through all the lines and records each one if one priority 1" do
+	it "looks through all the lines and records each one iff it's priority 1" do
 		allow(joshua).to receive(:priority_1?).exactly(8).times.and_return(false, true, 
-		false, false, true, false, true, false)
-		joshua.pick_lines
+												false, false, true, false, true, false)
+		no_priority_twos
+		joshua.prioritise_lines
 		expect(joshua.priority_1_lines.length).to eq 3
 		expect(joshua.priority_1_lines).to include(joshua.board.row(2))
 		expect(joshua.priority_1_lines).to include(joshua.board.column(2))
 		expect(joshua.priority_1_lines).to include(joshua.board.diagonals.first)
+	end
+
+	it "also records the priority 2 line if one is" do
+		allow(joshua).to receive(:priority_1?).exactly(8).times.and_return(false)
+		expect(joshua).to receive(:priority_2?).exactly(8).times.and_return(true, false, 
+												false, false, false, false, false, false)
+		joshua.prioritise_lines
+		expect(joshua.priority_2_lines.length).to eq 1
+		expect(joshua.priority_2_lines).to include(joshua.board.row(1))
 	end
 
 end

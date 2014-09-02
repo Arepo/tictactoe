@@ -7,6 +7,10 @@ module Joshua
 		@priority_1_lines ||= []
 	end
 
+	def priority_2_lines
+		@priority_2_lines ||= []
+	end
+
 	def initialize
 		@board = Board.instance
 	end
@@ -40,7 +44,7 @@ module Joshua
 		squares.select {|square| square.mark == nil }
 	end
 
-	def pick_lines
+	def prioritise_lines
 		prioritise_from(rows)
 		prioritise_from(columns)
 		prioritise_from(diagonals)
@@ -63,7 +67,8 @@ module Joshua
 	end
 
 	def prioritise_from(lines)
-		lines.each {|line| priority_1_lines.push(line) if priority_1?(line) }
+		lines.each {|line| priority_1_lines << line if priority_1?(line) }
+		lines.each {|line| priority_2_lines << line if priority_2?(line) }
 	end
 
 end
