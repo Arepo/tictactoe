@@ -3,8 +3,8 @@ module Joshua
 	attr_reader :board
 	attr_accessor :candidate_rows
 
-	def priority_1_lines
-		@priority_1_lines ||= []
+	def candidate_lines
+		@candidate_lines ||= []
 	end
 
 	def priority_2_lines
@@ -59,7 +59,7 @@ module Joshua
 	end
 
 	def tiebreak_lines
-		priority_1_lines.each {|line| return line if line.marked_by? self }
+		candidate_lines.each {|line| return line if line.marked_by? self }
 		priority_2_lines.select {|line| line.marked_by? self }
 	end
 
@@ -80,11 +80,11 @@ module Joshua
 	end
 
 	def prioritise_from(lines)
-		lines.each {|line| priority_1_lines << line if priority_1?(line) }
-		if priority_1_lines.empty? 
+		lines.each {|line| candidate_lines << line if priority_1?(line) }
+		if candidate_lines.empty? 
 			lines.each {|line| priority_2_lines << line if priority_2?(line) }
 		end
-		if priority_2_lines.empty? && priority_1_lines.empty?
+		if priority_2_lines.empty? && candidate_lines.empty?
 			lines.each {|line| priority_3_lines << line if priority_3?(line) }
 		end
 	end
