@@ -124,6 +124,7 @@ describe Joshua do
 			priority 2 if none are." do
 			expect(joshua).to receive(:priority_1?).exactly(8).times.and_return(false)
 			expect(joshua).to receive(:priority_2?).exactly(8).times.and_return(false)
+			allow(joshua).to receive(:priority_3?).exactly(8).times.and_return(false)
 			joshua.prioritise_lines
 			expect(joshua.priority_1_lines.length).to eq 0
 		end
@@ -181,6 +182,15 @@ describe Joshua do
 			allow(joshua).to receive(:priority_1?).exactly(8).times.and_return(false)
 			expect(joshua).not_to receive(:priority_3?)
 			joshua.prioritise_lines
+		end
+
+		it "otherwise records the priority 3 line if there is one" do
+			no_priority_ones
+			no_priority_twos
+			expect(joshua).to receive(:priority_3?).exactly(8).times.and_return(*one_positive)
+			joshua.prioritise_lines
+			expect(joshua.priority_3_lines.length).to eq 1
+			expect(joshua.priority_3_lines).to include(joshua.board.row(1))
 		end
 
 	end

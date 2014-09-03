@@ -11,6 +11,10 @@ module Joshua
 		@priority_2_lines ||= []
 	end
 
+	def priority_3_lines
+		@priority_3_lines ||= []
+	end
+
 	def initialize
 		@board = Board.instance
 	end
@@ -79,6 +83,9 @@ module Joshua
 		lines.each {|line| priority_1_lines << line if priority_1?(line) }
 		if priority_1_lines.empty? 
 			lines.each {|line| priority_2_lines << line if priority_2?(line) }
+		end
+		if priority_2_lines.empty? && priority_1_lines.empty?
+			lines.each {|line| priority_3_lines << line if priority_3?(line) }
 		end
 	end
 
