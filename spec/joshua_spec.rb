@@ -45,33 +45,6 @@ describe Joshua do
 		expect(joshua.determine_square.class).to eq Array
 	end
 
-	context "picking out squares" do
-
-		it "can tell how many times a square features in multiple sets of squares" do
-			row1 = [:square1, :circle, :circle]
-			row2 = [:square2, :circle, :circle]
-			row3 = [:circle, :square2, :circle]
-			joshua.candidate_rows = [row1, row2, row3]
-			expect(joshua.appearances_of(:square1)).to eq 1
-			expect(joshua.appearances_of(:square2)).to eq 2
-		end
-
-		it "can tell if a set of squares is full" do
-			expect(joshua.line_full?(square1, square1, square0)).to be_falsy
-			expect(joshua.line_full?(square1, square1, square1)).to be true
-			expect(joshua.line_full?(square1, square2, square0)).to be_falsy
-			expect(joshua.line_full?(square2, square2, square2)).to be true
-		end
-
-		it "selects the empty square from a set of three" do
-			expect(joshua.pick_candidates(square1, square1, square0)).to eq [square0]
-			expect(joshua.pick_candidates(square2, square2, square0)).to eq [square0]
-			expect(joshua.pick_candidates(square2, square2, square2)).to eq []
-			expect(joshua.pick_candidates(square1, square2, square0)).to eq [square0]
-		end
-
-	end
-
 	context "looking through lines" do
 
 		it "can look at the board's rows" do
@@ -185,6 +158,33 @@ describe Joshua do
 			expect(joshua).to receive(:priority_3?).exactly(8).times.and_return(*three_positives)
 			joshua.prioritise_lines
 			check_lines_registered
+		end
+
+	end
+
+	context "picking out squares" do
+
+		it "can tell how many times a square features in multiple sets of squares" do
+			row1 = [:square1, :circle, :circle]
+			row2 = [:square2, :circle, :circle]
+			row3 = [:circle, :square2, :circle]
+			joshua.candidate_rows = [row1, row2, row3]
+			expect(joshua.appearances_of(:square1)).to eq 1
+			expect(joshua.appearances_of(:square2)).to eq 2
+		end
+
+		it "can tell if a set of squares is full" do
+			expect(joshua.line_full?(square1, square1, square0)).to be_falsy
+			expect(joshua.line_full?(square1, square1, square1)).to be true
+			expect(joshua.line_full?(square1, square2, square0)).to be_falsy
+			expect(joshua.line_full?(square2, square2, square2)).to be true
+		end
+
+		it "selects the empty square from a set of three" do
+			expect(joshua.pick_candidates(square1, square1, square0)).to eq [square0]
+			expect(joshua.pick_candidates(square2, square2, square0)).to eq [square0]
+			expect(joshua.pick_candidates(square2, square2, square2)).to eq []
+			expect(joshua.pick_candidates(square1, square2, square0)).to eq [square0]
 		end
 
 	end

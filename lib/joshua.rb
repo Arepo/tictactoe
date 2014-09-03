@@ -13,11 +13,6 @@ module Joshua
 		@board = Board.instance
 	end
 
-	# def check_rows
-	# 	board.rows.each {|square| }
-	# 	add_candidate(board.row(1).square(1))
-	# end
-
 	def priority_1?(*squares)
 		return false if priority_2?(*squares)
 		return false if line_full?(*squares)
@@ -47,9 +42,9 @@ module Joshua
 	end
 
 	def prioritise_lines
-		find_priority_1s
-		find_priority_2s if candidate_lines.empty?
-		find_priority_3s if candidate_lines.empty?
+		note_priorities_of(1)
+		note_priorities_of(2) if candidate_lines.empty?
+		note_priorities_of(3) if candidate_lines.empty?
 	end
 
 	def tiebreak_lines
@@ -73,29 +68,9 @@ module Joshua
 		board.diagonals
 	end
 
-	def find_priority_1s
+	def note_priorities_of(priority_level)
 		[rows, columns, diagonals].each do |lines|
-			 lines.each {|line| candidate_lines << line if priority_1?(line) }
-		end
-		# if candidate_lines.none? {|line| priority_1?(line) }
-		# 	lines.each do |line|
-		# 		candidate_lines << line if priority_2?(line)
-		# 	end
-		# end
-		# if candidate_lines.none? {|line| priority_2?(line) }
-		# 	lines.each {|line| candidate_lines << line if priority_3?(line) }
-		# end
-	end
-
-	def find_priority_2s
-		[rows, columns, diagonals].each do |lines|
-			lines.each {|line| candidate_lines << line if priority_2?(line) }
-		end
-	end
-
-	def find_priority_3s
-		[rows, columns, diagonals].each do |lines|
-			lines.each {|line| candidate_lines << line if priority_3?(line) }
+			 lines.each {|line| candidate_lines << line if eval("priority_#{priority_level}?(line)") }
 		end
 	end
 
