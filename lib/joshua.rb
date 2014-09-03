@@ -3,14 +3,21 @@ require_relative 'board'
 module Joshua
 
 	attr_reader :board
-	attr_accessor :candidate_rows
 
 	def candidate_lines
 		@candidate_lines ||= []
 	end
 
+	def candidate_squares
+		@candidate_squares ||= [] 
+	end
+
 	def initialize
 		@board = Board.instance
+	end
+
+	def your_turn
+
 	end
 
 	def priority_1?(*squares)
@@ -28,7 +35,7 @@ module Joshua
 	end
 
 	def appearances_of(square)
-		candidate_rows.inject(0) do |appearances, row|
+		candidate_lines.inject(0) do |appearances, row|
 			row.include?(square) ? appearances + 1 : appearances
 		end
 	end
@@ -37,7 +44,7 @@ module Joshua
 		squares.all? {|square| square.mark }
 	end
 
-	def pick_candidates(*squares)
+	def vacant_squares(*squares)
 		squares.select {|square| square.mark == nil }
 	end
 
@@ -52,8 +59,8 @@ module Joshua
 		candidate_lines.select {|line| line.marked_by? self }
 	end
 
-	def determine_square
-		[1,2]
+	def random_tiebreak
+		candidate_squares.sample
 	end
 
 	def rows
@@ -68,9 +75,9 @@ module Joshua
 		board.diagonals
 	end
 
-	def note_priorities_of(priority_level)
+	def note_priorities_of(num)
 		[rows, columns, diagonals].each do |lines|
-			 lines.each {|line| candidate_lines << line if eval("priority_#{priority_level}?(line)") }
+			 lines.each {|line| candidate_lines << line if eval("priority_#{num}?(line)") }
 		end
 	end
 

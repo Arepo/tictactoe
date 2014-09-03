@@ -14,37 +14,6 @@ describe Joshua do
 	let(:square1) {double :square, mark: :x}
 	let(:square2) {double :square, mark: :o}
 
-	def no_priority_twos
-		allow(joshua).to receive(:priority_2?).and_return(false)
-	end
-
-	def no_priority_ones
-		allow(joshua).to receive(:priority_1?).and_return(false)
-	end
-
-	def three_positives
-		[false, true, false, false, true, false, true, false]
-	end
-
-	def one_positive
-		[true].fill(false, 1..7)
-	end
-
-	def produce_one_(priority_n)
-		allow(joshua).to receive(priority_n).exactly(9).times.and_return(*one_positive)
-	end
-
-	def check_lines_registered
-		expect(joshua.candidate_lines.length).to eq 3
-		expect(joshua.candidate_lines).to include(joshua.board.row(2))
-		expect(joshua.candidate_lines).to include(joshua.board.column(2))
-		expect(joshua.candidate_lines).to include(joshua.board.diagonals.first)
-	end
-
-	xit "specifies the row and square it's going to play on" do
-		expect(joshua.determine_square.class).to eq Array
-	end
-
 	context "looking through lines" do
 
 		it "can look at the board's rows" do
@@ -168,7 +137,7 @@ describe Joshua do
 			row1 = [:square1, :circle, :circle]
 			row2 = [:square2, :circle, :circle]
 			row3 = [:circle, :square2, :circle]
-			joshua.candidate_rows = [row1, row2, row3]
+			joshua.candidate_lines.push(*[row1, row2, row3])
 			expect(joshua.appearances_of(:square1)).to eq 1
 			expect(joshua.appearances_of(:square2)).to eq 2
 		end
@@ -181,10 +150,16 @@ describe Joshua do
 		end
 
 		it "selects the empty square from a set of three" do
-			expect(joshua.pick_candidates(square1, square1, square0)).to eq [square0]
-			expect(joshua.pick_candidates(square2, square2, square0)).to eq [square0]
-			expect(joshua.pick_candidates(square2, square2, square2)).to eq []
-			expect(joshua.pick_candidates(square1, square2, square0)).to eq [square0]
+			expect(joshua.vacant_squares(square1, square1, square0)).to eq [square0]
+			expect(joshua.vacant_squares(square2, square2, square0)).to eq [square0]
+			expect(joshua.vacant_squares(square2, square2, square2)).to eq []
+			expect(joshua.vacant_squares(square1, square2, square0)).to eq [square0]
+		end
+
+		it "can pick an empty square at random from a set of 1 or more" do
+			joshua.candidate_squares.replace([:square1, :square2, :square3])
+			expect(joshua.candidate_squares).to receive(:sample)
+			joshua.random_tiebreak
 		end
 
 	end
@@ -207,14 +182,35 @@ describe Joshua do
 			expect(joshua.tiebreak_lines).to eq [line1, line2]
 		end
 
-		xit "plays on the empty square from a priority 1 line, picking the one it dominates as a tiebreak" do
-			no_priority_twos
-			produce_one_(:priority_1?)
-			expect(joshua).to receive(:pick_candidates).with(:row).and_return([:square])
-			expect(joshua).to receive(:prioritise_from)#.with(:rows).and_return(:row)
-			expect(joshua).to receive(:prioritise_lines)
-		end
+	
 
+	end
+
+	def no_priority_twos
+		allow(joshua).to receive(:priority_2?).and_return(false)
+	end
+
+	def no_priority_ones
+		allow(joshua).to receive(:priority_1?).and_return(false)
+	end
+
+	def three_positives
+		[false, true, false, false, true, false, true, false]
+	end
+
+	def one_positive
+		[true].fill(false, 1..7)
+	end
+
+	def produce_one_(priority_n)
+		allow(joshua).to receive(priority_n).exactly(9).times.and_return(*one_positive)
+	end
+
+	def check_lines_registered
+		expect(joshua.candidate_lines.length).to eq 3
+		expect(joshua.candidate_lines).to include(joshua.board.row(2))
+		expect(joshua.candidate_lines).to include(joshua.board.column(2))
+		expect(joshua.candidate_lines).to include(joshua.board.diagonals.first)
 	end
 
 end

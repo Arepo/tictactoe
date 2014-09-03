@@ -39,8 +39,8 @@ describe Game do
 			allow_any_instance_of(Player).to receive(:your_turn)
 			game2 = Game.new
 			expect(game2.player1).to respond_to :get_square
-			expect(game2.player1).not_to respond_to :determine_square
-			expect(game2.player2).to respond_to :determine_square
+			expect(game2.player1).not_to respond_to :candidate_lines
+			expect(game2.player2).to respond_to :candidate_lines
 			expect(game2.player2).not_to respond_to :get_square
 		end
 
