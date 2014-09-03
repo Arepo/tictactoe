@@ -33,26 +33,17 @@ describe Joshua do
 	def produce_one_(priority_n)
 		allow(joshua).to receive(priority_n).exactly(9).times.and_return(*one_positive)
 	end
-	
+
+	def check_lines_registered
+		expect(joshua.candidate_lines.length).to eq 3
+		expect(joshua.candidate_lines).to include(joshua.board.row(2))
+		expect(joshua.candidate_lines).to include(joshua.board.column(2))
+		expect(joshua.candidate_lines).to include(joshua.board.diagonals.first)
+	end
 
 	xit "specifies the row and square it's going to play on" do
 		expect(joshua.determine_square.class).to eq Array
 	end
-
-	# xit "sees if row 1 contains two identical marks" do
-	# 	mark = nil
-	# 	joshua.board.row(1).each {|square| square.mark_with(Mark.new(mark)); mark = :X }
-	# 	expect(joshua.)
-	# 	# expect(joshua).to receive(:add_candidate).with(joshua.board.row(1).square(1))
-	# 	joshua.check_rows
-	# end
-
-	# xit "sees if row 3 contains two identical marks" do
-	# 	mark = nil
-	# 	joshua.board.row(3).each {|square| square.mark_with(Mark.new(mark)); mark = :X }
-	# 	# expect(joshua).to receive(:add_candidate).with(joshua.board.row(3).square(1))
-	# 	joshua.check_rows
-	# end
 
 	context "picking out squares" do
 
@@ -142,10 +133,7 @@ describe Joshua do
 			allow(joshua).to receive(:priority_1?).exactly(8).times.and_return(*three_positives)
 			no_priority_twos
 			joshua.prioritise_lines
-			expect(joshua.candidate_lines.length).to eq 3
-			expect(joshua.candidate_lines).to include(joshua.board.row(2))
-			expect(joshua.candidate_lines).to include(joshua.board.column(2))
-			expect(joshua.candidate_lines).to include(joshua.board.diagonals.first)
+			check_lines_registered
 		end
 
 		it "does not record any priority 2 lines if it finds any of priority 1" do
@@ -166,10 +154,7 @@ describe Joshua do
 			no_priority_ones
 			expect(joshua).to receive(:priority_2?).exactly(8).times.and_return(*three_positives)
 			joshua.prioritise_lines
-			expect(joshua.candidate_lines.length).to eq 3
-			expect(joshua.candidate_lines).to include(joshua.board.row(2))
-			expect(joshua.candidate_lines).to include(joshua.board.column(2))
-			expect(joshua.candidate_lines).to include(joshua.board.diagonals.first)
+			check_lines_registered
 		end
 
 		it "does not record any priority 3 lines if there are any of priority 1" do
@@ -199,10 +184,7 @@ describe Joshua do
 			no_priority_twos
 			expect(joshua).to receive(:priority_3?).exactly(8).times.and_return(*three_positives)
 			joshua.prioritise_lines
-			expect(joshua.candidate_lines.length).to eq 3
-			expect(joshua.candidate_lines).to include(joshua.board.row(2))
-			expect(joshua.candidate_lines).to include(joshua.board.column(2))
-			expect(joshua.candidate_lines).to include(joshua.board.diagonals.first)
+			check_lines_registered
 		end
 
 	end

@@ -9,14 +9,6 @@ module Joshua
 		@candidate_lines ||= []
 	end
 
-	def candidate_lines
-		@candidate_lines ||= []
-	end
-
-	def candidate_lines
-		@candidate_lines ||= []
-	end
-
 	def initialize
 		@board = Board.instance
 	end
