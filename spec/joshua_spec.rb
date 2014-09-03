@@ -190,8 +190,8 @@ describe Joshua do
 			no_priority_twos
 			expect(joshua).to receive(:priority_3?).exactly(8).times.and_return(*one_positive)
 			joshua.prioritise_lines
-			expect(joshua.priority_3_lines.length).to eq 1
-			expect(joshua.priority_3_lines).to include(joshua.board.row(1))
+			expect(joshua.candidate_lines.length).to eq 1
+			expect(joshua.candidate_lines).to include(joshua.board.row(1))
 		end
 
 		it "otherwise records multiple priority 3 lines if there are any" do
@@ -199,10 +199,10 @@ describe Joshua do
 			no_priority_twos
 			expect(joshua).to receive(:priority_3?).exactly(8).times.and_return(*three_positives)
 			joshua.prioritise_lines
-			expect(joshua.priority_3_lines.length).to eq 3
-			expect(joshua.priority_3_lines).to include(joshua.board.row(2))
-			expect(joshua.priority_3_lines).to include(joshua.board.column(2))
-			expect(joshua.priority_3_lines).to include(joshua.board.diagonals.first)
+			expect(joshua.candidate_lines.length).to eq 3
+			expect(joshua.candidate_lines).to include(joshua.board.row(2))
+			expect(joshua.candidate_lines).to include(joshua.board.column(2))
+			expect(joshua.candidate_lines).to include(joshua.board.diagonals.first)
 		end
 
 	end

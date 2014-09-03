@@ -13,8 +13,8 @@ module Joshua
 		@candidate_lines ||= []
 	end
 
-	def priority_3_lines
-		@priority_3_lines ||= []
+	def candidate_lines
+		@candidate_lines ||= []
 	end
 
 	def initialize
@@ -91,7 +91,7 @@ module Joshua
 		# 	end
 		# end
 		# if candidate_lines.none? {|line| priority_2?(line) }
-		# 	lines.each {|line| priority_3_lines << line if priority_3?(line) }
+		# 	lines.each {|line| candidate_lines << line if priority_3?(line) }
 		# end
 	end
 
