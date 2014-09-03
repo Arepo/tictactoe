@@ -30,6 +30,10 @@ module Joshua
 		true if squares.map(&:mark).compact.length == 1
 	end
 
+	def priority_3?(*squares)
+		true if squares.none?(&:mark)
+	end
+
 	def appearances_of(square)
 		candidate_rows.inject(0) do |appearances, row|
 			row.include?(square) ? appearances + 1 : appearances
@@ -52,6 +56,7 @@ module Joshua
 
 	def tiebreak_lines
 		priority_1_lines.each {|line| return line if line.marked_by? self }
+		priority_2_lines.select {|line| line.marked_by? self }
 	end
 
 	def determine_square
@@ -72,7 +77,9 @@ module Joshua
 
 	def prioritise_from(lines)
 		lines.each {|line| priority_1_lines << line if priority_1?(line) }
-		lines.each {|line| priority_2_lines << line if priority_2?(line) }
+		if priority_1_lines.empty? 
+			lines.each {|line| priority_2_lines << line if priority_2?(line) }
+		end
 	end
 
 end
