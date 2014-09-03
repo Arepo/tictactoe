@@ -1,3 +1,5 @@
+require_relative 'board'
+
 module Joshua
 
 	attr_reader :board
@@ -7,8 +9,8 @@ module Joshua
 		@candidate_lines ||= []
 	end
 
-	def priority_2_lines
-		@priority_2_lines ||= []
+	def candidate_lines
+		@candidate_lines ||= []
 	end
 
 	def priority_3_lines
@@ -53,14 +55,14 @@ module Joshua
 	end
 
 	def prioritise_lines
-		prioritise_from(rows)
-		prioritise_from(columns)
-		prioritise_from(diagonals)
+		find_priority_1s
+		find_priority_2s if candidate_lines.empty?
+		find_priority_3s if candidate_lines.empty?
 	end
 
 	def tiebreak_lines
-		candidate_lines.each {|line| return line if line.marked_by? self }
-		priority_2_lines.select {|line| line.marked_by? self }
+		candidate_lines.each {|line| return line if line.marked_by?(self) && priority_1?(line) }
+		candidate_lines.select {|line| line.marked_by? self }
 	end
 
 	def determine_square
@@ -79,13 +81,29 @@ module Joshua
 		board.diagonals
 	end
 
-	def prioritise_from(lines)
-		lines.each {|line| candidate_lines << line if priority_1?(line) }
-		if candidate_lines.empty? 
-			lines.each {|line| priority_2_lines << line if priority_2?(line) }
+	def find_priority_1s
+		[rows, columns, diagonals].each do |lines|
+			 lines.each {|line| candidate_lines << line if priority_1?(line) }
 		end
-		if priority_2_lines.empty? && candidate_lines.empty?
-			lines.each {|line| priority_3_lines << line if priority_3?(line) }
+		# if candidate_lines.none? {|line| priority_1?(line) }
+		# 	lines.each do |line|
+		# 		candidate_lines << line if priority_2?(line)
+		# 	end
+		# end
+		# if candidate_lines.none? {|line| priority_2?(line) }
+		# 	lines.each {|line| priority_3_lines << line if priority_3?(line) }
+		# end
+	end
+
+	def find_priority_2s
+		[rows, columns, diagonals].each do |lines|
+			lines.each {|line| candidate_lines << line if priority_2?(line) }
+		end
+	end
+
+	def find_priority_3s
+		[rows, columns, diagonals].each do |lines|
+			lines.each {|line| candidate_lines << line if priority_3?(line) }
 		end
 	end
 

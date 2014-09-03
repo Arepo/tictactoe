@@ -1,4 +1,5 @@
 require 'joshua'
+require 'byebug'
 
 class JoshuaTest; include Joshua; end
 
@@ -14,11 +15,11 @@ describe Joshua do
 	let(:square2) {double :square, mark: :o}
 
 	def no_priority_twos
-		allow(joshua).to receive(:priority_2?).exactly(8).times.and_return(false)
+		allow(joshua).to receive(:priority_2?).and_return(false)
 	end
 
 	def no_priority_ones
-		allow(joshua).to receive(:priority_1?).exactly(8).times.and_return(false)
+		allow(joshua).to receive(:priority_1?).and_return(false)
 	end
 
 	def three_positives
@@ -30,7 +31,7 @@ describe Joshua do
 	end
 
 	def produce_one_(priority_n)
-		allow(joshua).to receive(priority_n).exactly(8).times.and_return(*one_positive)
+		allow(joshua).to receive(priority_n).exactly(9).times.and_return(*one_positive)
 	end
 	
 
@@ -157,18 +158,18 @@ describe Joshua do
 			no_priority_ones
 			expect(joshua).to receive(:priority_2?).exactly(8).times.and_return(*one_positive)
 			joshua.prioritise_lines
-			expect(joshua.priority_2_lines.length).to eq 1
-			expect(joshua.priority_2_lines).to include(joshua.board.row(1))
+			expect(joshua.candidate_lines.length).to eq 1
+			expect(joshua.candidate_lines).to include(joshua.board.row(1))
 		end
 
 		it "otherwise records all the priority 2 lines if there are more than one" do
 			no_priority_ones
 			expect(joshua).to receive(:priority_2?).exactly(8).times.and_return(*three_positives)
 			joshua.prioritise_lines
-			expect(joshua.priority_2_lines.length).to eq 3
-			expect(joshua.priority_2_lines).to include(joshua.board.row(2))
-			expect(joshua.priority_2_lines).to include(joshua.board.column(2))
-			expect(joshua.priority_2_lines).to include(joshua.board.diagonals.first)
+			expect(joshua.candidate_lines.length).to eq 3
+			expect(joshua.candidate_lines).to include(joshua.board.row(2))
+			expect(joshua.candidate_lines).to include(joshua.board.column(2))
+			expect(joshua.candidate_lines).to include(joshua.board.diagonals.first)
 		end
 
 		it "does not record any priority 3 lines if there are any of priority 1" do
@@ -211,6 +212,7 @@ describe Joshua do
 		it "chooses among equal priority 1 lines by the one which contains its mark(s)" do
 			line1 = double :line, marked_by?: false
 			line2 = double :line, marked_by?: true
+			allow(joshua).to receive(:priority_1?).and_return(true)
 			expect(joshua).to receive(:candidate_lines).and_return([line1, line2])
 			expect(joshua.tiebreak_lines).to eq line2
 		end
@@ -218,7 +220,8 @@ describe Joshua do
 		it "if no priority 1 lines, returns all priority 2 lines marked by itself" do
 			line1 = double :line, marked_by?: true
 			line2 = double :line, marked_by?: true
-			expect(joshua).to receive(:priority_2_lines).and_return([line1, line2])
+			allow(joshua).to receive(:priority_1?).and_return(false)
+			expect(joshua).to receive(:candidate_lines).twice.and_return([line1, line2])
 			expect(joshua.tiebreak_lines).to eq [line1, line2]
 		end
 
