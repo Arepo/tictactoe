@@ -50,6 +50,10 @@ module Joshua
 		prioritise_from(diagonals)
 	end
 
+	def tiebreak_lines
+		priority_1_lines.each {|line| return line if line.marked_by? self }
+	end
+
 	def determine_square
 		[1,2]
 	end

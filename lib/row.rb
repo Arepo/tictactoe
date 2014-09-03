@@ -10,4 +10,8 @@ class Array
 		self.map {|square| square.to_s }.join
 	end
 
+	def marked_by?(source)
+		self.any? {|square| square.source == source if square.mark }
+	end
+
 end
