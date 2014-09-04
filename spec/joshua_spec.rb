@@ -171,18 +171,36 @@ describe Joshua do
 			line2 = double :line, marked_by?: true
 			allow(joshua).to receive(:priority_1?).and_return(true)
 			expect(joshua).to receive(:candidate_lines).and_return([line1, line2])
-			expect(joshua.tiebreak_lines).to eq line2
+			expect(joshua.choose_own_line).to eq line2
 		end
 
-		it "if no priority 1 lines, returns all priority 2 lines marked by itself" do
-			line1 = double :line, marked_by?: true
-			line2 = double :line, marked_by?: true
-			allow(joshua).to receive(:priority_1?).and_return(false)
+		it "if no priority 1 lines contain its mark, chooses any remaining priority 1 line" do
+			line1 = double :line, marked_by?: false
+			line2 = double :line, marked_by?: false
+			allow(joshua).to receive(:priority_1?).and_return(true)
 			expect(joshua).to receive(:candidate_lines).twice.and_return([line1, line2])
-			expect(joshua.tiebreak_lines).to eq [line1, line2]
+			expect(joshua.choose_own_line).to eq line1
 		end
 
-	
+	end
+
+	context "high level turn process" do
+
+		it "on being prompted for its turn, prioritises lines from the grid" do
+			expect(joshua).to receive(:prioritise_lines)
+			joshua.your_turn
+		end
+
+		it "if it's found priority one lines, chooses its own and saves it as the only candidate line" do
+			line1 = [:line1]
+			line2 = [:line2]
+			joshua.candidate_lines << line1
+			joshua.candidate_lines << line2
+			allow(joshua).to receive(:prioritise_lines)
+			expect(joshua).to receive(:choose_own_line).and_return(line1)
+			joshua.your_turn
+			expect(joshua.candidate_lines).to eq line1
+		end
 
 	end
 

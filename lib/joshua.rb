@@ -17,7 +17,8 @@ module Joshua
 	end
 
 	def your_turn
-
+		prioritise_lines
+		candidate_lines.replace(choose_own_line)
 	end
 
 	def priority_1?(*squares)
@@ -54,9 +55,10 @@ module Joshua
 		note_priorities_of(3) if candidate_lines.empty?
 	end
 
-	def tiebreak_lines
+	def choose_own_line
 		candidate_lines.each {|line| return line if line.marked_by?(self) && priority_1?(line) }
-		candidate_lines.select {|line| line.marked_by? self }
+		candidate_lines.each {|line| return line if priority_1?(line) }
+		# candidate_lines.select {|line| line.marked_by? self }
 	end
 
 	def random_tiebreak
