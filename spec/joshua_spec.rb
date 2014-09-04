@@ -192,14 +192,19 @@ describe Joshua do
 		end
 
 		it "if it's found priority one lines, chooses its own and saves it as the only candidate line" do
-			line1 = [:line1]
-			line2 = [:line2]
+			line1 = [square2, square2, square0]
+			line2 = [square1, square1, square0]
 			joshua.candidate_lines << line1
 			joshua.candidate_lines << line2
 			allow(joshua).to receive(:prioritise_lines)
 			expect(joshua).to receive(:choose_own_line).and_return(line1)
 			joshua.your_turn
 			expect(joshua.candidate_lines).to eq line1
+		end
+
+		it "does not update candidate lines if it doesn't find any priority ones" do
+			expect(joshua.candidate_lines).not_to receive(:replace)
+			joshua.your_turn
 		end
 
 	end

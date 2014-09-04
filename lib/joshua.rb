@@ -18,7 +18,7 @@ module Joshua
 
 	def your_turn
 		prioritise_lines
-		candidate_lines.replace(choose_own_line)
+		candidate_lines.replace(choose_own_line) if priority_1?(*candidate_lines.first)
 	end
 
 	def priority_1?(*squares)
@@ -50,14 +50,14 @@ module Joshua
 	end
 
 	def prioritise_lines
-		note_priorities_of(1)
-		note_priorities_of(2) if candidate_lines.empty?
-		note_priorities_of(3) if candidate_lines.empty?
+		note_lines_of(:priority_1?)
+		note_lines_of(:priority_2?) if candidate_lines.empty?
+		note_lines_of(:priority_3?) if candidate_lines.empty?
 	end
 
 	def choose_own_line
 		candidate_lines.each {|line| return line if line.marked_by?(self) && priority_1?(line) }
-		candidate_lines.each {|line| return line if priority_1?(line) }
+		candidate_lines.each {|line| return line if priority_1?(*line) }
 		# candidate_lines.select {|line| line.marked_by? self }
 	end
 
@@ -77,9 +77,9 @@ module Joshua
 		board.diagonals
 	end
 
-	def note_priorities_of(num)
+	def note_lines_of(priority_level)
 		[rows, columns, diagonals].each do |lines|
-			 lines.each {|line| candidate_lines << line if eval("priority_#{num}?(line)") }
+			lines.each {|line| candidate_lines << line if eval("#{priority_level}(*line)") }
 		end
 	end
 
