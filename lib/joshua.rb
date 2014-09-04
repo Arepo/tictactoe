@@ -18,20 +18,20 @@ module Joshua
 
 	def your_turn
 		prioritise_lines
-		candidate_lines.replace(choose_own_line) if priority_1?(*candidate_lines.first)
+		candidate_lines.replace(choose_own_line) if priority_1?(candidate_lines.first)
 	end
 
-	def priority_1?(*squares)
-		return false if priority_2?(*squares)
-		return false if line_full?(*squares)
+	def priority_1?(squares)
+		return false if priority_2?(squares)
+		return false if line_full?(squares)
 		true if squares.uniq(&:mark).length == 2 
 	end
 
-	def priority_2?(*squares)
+	def priority_2?(squares)
 		true if squares.map(&:mark).compact.length == 1
 	end
 
-	def priority_3?(*squares)
+	def priority_3?(squares)
 		true if squares.none?(&:mark)
 	end
 
@@ -41,12 +41,12 @@ module Joshua
 		end
 	end
 
-	def line_full?(*squares)
+	def line_full?(squares)
 		squares.all? {|square| square.mark }
 	end
 
 	def vacant_squares(*squares)
-		squares.select {|square| square.mark == nil }
+		squares.flatten.select {|square| square.mark == nil }
 	end
 
 	def prioritise_lines
@@ -79,7 +79,7 @@ module Joshua
 
 	def note_lines_of(priority_level)
 		[rows, columns, diagonals].each do |lines|
-			lines.each {|line| candidate_lines << line if eval("#{priority_level}(*line)") }
+			lines.each {|line| candidate_lines << line if eval("#{priority_level}(line)") }
 		end
 	end
 

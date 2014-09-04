@@ -30,28 +30,28 @@ describe Joshua do
 
 		it "can tell if a set of three squares has exactly two marked, that == each other,
 			and considers it top priority" do
-			expect(joshua.priority_1?(square1, square1, square2)).to be_falsy
-			expect(joshua.priority_1?(square1, square2, square0)).to be_falsy
-			expect(joshua.priority_1?(square1, square1, square1)).to be_falsy
-			expect(joshua.priority_1?(square0, square0, square0)).to be_falsy
-			expect(joshua.priority_1?(square0, square0, square1)).to be_falsy
-			expect(joshua.priority_1?(square0, square2, square2)).to be true
+			expect(joshua.priority_1?([square1, square1, square2])).to be_falsy
+			expect(joshua.priority_1?([square1, square2, square0])).to be_falsy
+			expect(joshua.priority_1?([square1, square1, square1])).to be_falsy
+			expect(joshua.priority_1?([square0, square0, square0])).to be_falsy
+			expect(joshua.priority_1?([square0, square0, square1])).to be_falsy
+			expect(joshua.priority_1?([square0, square2, square2])).to be true
 		end
 
 		it "can tell if a set of three squares has exactly 1 square marked, 
 			and considers it second priority" do
-			expect(joshua.priority_2?(square1, square0, square0)).to be true
-			expect(joshua.priority_2?(square1, square1, square0)).to be_falsy
-			expect(joshua.priority_2?(square1, square2, square0)).to be_falsy
-			expect(joshua.priority_2?(square0, square0, square0)).to be_falsy
+			expect(joshua.priority_2?([square1, square0, square0])).to be true
+			expect(joshua.priority_2?([square1, square1, square0])).to be_falsy
+			expect(joshua.priority_2?([square1, square2, square0])).to be_falsy
+			expect(joshua.priority_2?([square0, square0, square0])).to be_falsy
 		end
 
 		it "can tell if a set of three squares has none marked, and considers it third priority" do
-			expect(joshua.priority_3?(square1, square0, square0)).to be_falsy
-			expect(joshua.priority_3?(square0, square2, square0)).to be_falsy
-			expect(joshua.priority_3?(square1, square1, square0)).to be_falsy
-			expect(joshua.priority_3?(square1, square2, square0)).to be_falsy
-			expect(joshua.priority_3?(square0, square0, square0)).to be true
+			expect(joshua.priority_3?([square1, square0, square0])).to be_falsy
+			expect(joshua.priority_3?([square0, square2, square0])).to be_falsy
+			expect(joshua.priority_3?([square1, square1, square0])).to be_falsy
+			expect(joshua.priority_3?([square1, square2, square0])).to be_falsy
+			expect(joshua.priority_3?([square0, square0, square0])).to be true
 		end
 
 		it "looks through all the lines, and doesn't record any as priority 1 or 
@@ -143,10 +143,10 @@ describe Joshua do
 		end
 
 		it "can tell if a set of squares is full" do
-			expect(joshua.line_full?(square1, square1, square0)).to be_falsy
-			expect(joshua.line_full?(square1, square1, square1)).to be true
-			expect(joshua.line_full?(square1, square2, square0)).to be_falsy
-			expect(joshua.line_full?(square2, square2, square2)).to be true
+			expect(joshua.line_full?([square1, square1, square0])).to be_falsy
+			expect(joshua.line_full?([square1, square1, square1])).to be true
+			expect(joshua.line_full?([square1, square2, square0])).to be_falsy
+			expect(joshua.line_full?([square2, square2, square2])).to be true
 		end
 
 		it "selects the empty square from a set of three" do
@@ -188,6 +188,7 @@ describe Joshua do
 
 		it "on being prompted for its turn, prioritises lines from the grid" do
 			expect(joshua).to receive(:prioritise_lines)
+			allow(joshua).to receive(:priority_1?)
 			joshua.your_turn
 		end
 
