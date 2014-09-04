@@ -18,7 +18,10 @@ module Joshua
 
 	def your_turn
 		prioritise_lines
-		candidate_lines.replace(choose_own_line) if priority_1?(candidate_lines.first)
+		if priority_1?(candidate_lines.first)
+			candidate_lines.replace(choose_own_line) 
+			play_on(vacant_squares(candidate_lines))
+		end
 	end
 
 	def priority_1?(squares)

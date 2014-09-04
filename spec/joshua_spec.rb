@@ -193,18 +193,29 @@ describe Joshua do
 		end
 
 		it "if it's found priority one lines, chooses its own and saves it as the only candidate line" do
-			line1 = [square2, square2, square0]
-			line2 = [square1, square1, square0]
+			line1 = [square1, square1, square0]
+			line2 = [square2, square2, square0]
 			joshua.candidate_lines << line1
 			joshua.candidate_lines << line2
 			allow(joshua).to receive(:prioritise_lines)
-			expect(joshua).to receive(:choose_own_line).and_return(line1)
+			expect(joshua).to receive(:choose_own_line).and_return(line2)
+			allow(joshua).to receive(:play_on)
 			joshua.your_turn
-			expect(joshua.candidate_lines).to eq line1
+			expect(joshua.candidate_lines).to eq line2
 		end
 
 		it "does not update candidate lines if it doesn't find any priority ones" do
 			expect(joshua.candidate_lines).not_to receive(:replace)
+			joshua.your_turn
+		end
+
+		it "if it has found a priority one line, plays on the line's free square" do
+			square = double :square
+			allow(joshua).to receive(:prioritise_lines)
+			allow(joshua).to receive(:priority_1?).and_return(true)
+			allow(joshua).to receive(:candidate_lines).and_return([])
+			allow(joshua).to receive(:vacant_squares).and_return(square)
+			expect(joshua).to receive(:play_on).with(square)
 			joshua.your_turn
 		end
 
