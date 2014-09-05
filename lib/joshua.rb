@@ -12,18 +12,40 @@ module Joshua
 		@candidate_squares ||= [] 
 	end
 
+	def empty_lines
+		@empty_lines ||= [] 
+	end
+
 	def initialize
 		@board = Board.instance
 	end
 
 	def your_turn
 		prioritise_lines
-		if priority_1?(candidate_lines.first)
+		# byebug
+		if !candidate_lines.empty? && priority_1?(candidate_lines.first)
 			candidate_lines.replace(choose_own_line) 
-			return play_on(vacant_squares(candidate_lines))
+			return play_on(vacant_squares_in(candidate_lines))
 		end
-		if priority_2?(candidate_lines.first)
+		if !candidate_lines.empty? && priority_2?(candidate_lines.first)
+			candidate_squares.replace(vacant_squares_in(candidate_lines).uniq)
+		end
+	end
 
+	def prioritise_lines
+		flag_lines_of(:priority_1?)
+		note_empty_lines && flag_lines_of(:priority_2?) if candidate_lines.empty?
+	end
+
+	def note_empty_lines
+		[rows, columns, diagonals].each do |lines|
+			lines.each {|line| empty_lines << line if priority_3?(line) }
+		end
+	end
+
+	def flag_lines_of(priority_level)
+		[rows, columns, diagonals].each do |lines|
+			lines.each {|line| candidate_lines << line if eval("#{priority_level}(line)") }
 		end
 	end
 
@@ -51,14 +73,8 @@ module Joshua
 		squares.all? {|square| square.mark }
 	end
 
-	def vacant_squares(*squares)
-		squares.flatten.select {|square| square.mark == nil }
-	end
-
-	def prioritise_lines
-		note_lines_of(:priority_1?)
-		note_lines_of(:priority_2?) if candidate_lines.empty?
-		note_lines_of(:priority_3?) if candidate_lines.empty?
+	def vacant_squares_in(*squares)
+		squares.flatten.reject {|square| square.mark }
 	end
 
 	def choose_own_line
@@ -68,13 +84,11 @@ module Joshua
 	end
 
 	def refine_squares
-		candidate_squares.replace(recurring_squares)
+		candidate_squares.replace(recurring_candidate_squares)
 	end
 
-	def recurring_squares
-		candidate_lines.flatten.reject do |square|
-			square.mark
-		end.get_mode
+	def recurring_candidate_squares
+		vacant_squares_in(candidate_lines).get_mode
 	end
 
 	def random_tiebreak
@@ -91,12 +105,6 @@ module Joshua
 
 	def diagonals
 		board.diagonals
-	end
-
-	def note_lines_of(priority_level)
-		[rows, columns, diagonals].each do |lines|
-			lines.each {|line| candidate_lines << line if eval("#{priority_level}(line)") }
-		end
 	end
 
 end
