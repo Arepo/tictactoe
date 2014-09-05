@@ -162,6 +162,17 @@ describe Joshua do
 			joshua.random_tiebreak
 		end
 
+		xit "can pick the most frequently occuring unmarked squares from multiple sets of lines" do
+			square3 = double :square, mark: nil
+			square4 = double :square, mark: nil
+			square5 = double :square, mark: nil
+			joshua.candidate_lines << [square1, square0, square3]
+			joshua.candidate_lines << [square1, square0, square4]
+			joshua.candidate_lines << [square1, square3, square5]
+			joshua.refine_squares
+			expect(joshua.candidate_squares).to eq [square0, square3]
+		end
+
 	end
 
 	context "choosing among candidate lines" do
@@ -189,6 +200,7 @@ describe Joshua do
 		it "on being prompted for its turn, prioritises lines from the grid" do
 			expect(joshua).to receive(:prioritise_lines)
 			allow(joshua).to receive(:priority_1?)
+			allow(joshua).to receive(:priority_2?)
 			joshua.your_turn
 		end
 
@@ -216,6 +228,15 @@ describe Joshua do
 			allow(joshua).to receive(:candidate_lines).and_return([])
 			allow(joshua).to receive(:vacant_squares).and_return(square)
 			expect(joshua).to receive(:play_on).with(square)
+			joshua.your_turn
+		end
+
+		it "if it has found one or more priority two lines, finds the squares that appear most in priority 2 or 3 lines" do
+			allow(joshua).to receive(:prioritise_lines)
+			allow(joshua).to receive(:priority_1?).and_return(false)
+			allow(joshua).to receive(:priority_2?).and_return(true)
+			expect(joshua).to receive(:priority_2?)
+			# main test here
 			joshua.your_turn
 		end
 

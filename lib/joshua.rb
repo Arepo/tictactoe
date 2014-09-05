@@ -20,7 +20,10 @@ module Joshua
 		prioritise_lines
 		if priority_1?(candidate_lines.first)
 			candidate_lines.replace(choose_own_line) 
-			play_on(vacant_squares(candidate_lines))
+			return play_on(vacant_squares(candidate_lines))
+		end
+		if priority_2?(candidate_lines.first)
+
 		end
 	end
 
@@ -62,6 +65,15 @@ module Joshua
 		candidate_lines.each {|line| return line if line.marked_by?(self) && priority_1?(line) }
 		candidate_lines.each {|line| return line if priority_1?(*line) }
 		# candidate_lines.select {|line| line.marked_by? self }
+	end
+
+	def refine_squares
+		# freq = arr.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
+		p candidate_lines.flatten.first
+		frequency = candidate_lines.flatten.inject(Hash.new(0)) do |hash, square|
+			hash[square] += 1
+			square
+		end
 	end
 
 	def random_tiebreak

@@ -18,6 +18,10 @@ describe 'row' do
 			expect(board.row(1).marked_by?(:player1)).to be true
 		end
 
+		it "can pick out an array of its modal elements" do
+			expect(%w{square1 square1 square2 square2 square3}.get_mode). to eq ["square1", "square2"]
+		end
+
 	end
 
 end
