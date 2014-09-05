@@ -186,9 +186,10 @@ describe Joshua do
 		end
 
 		it "if no priority 1 lines contain its mark, chooses any remaining priority 1 line" do
-			line1 = double :line, marked_by?: false
+			line1 = double :line, marked_by?: false, uniq: [:is, :priority_1]
 			line2 = double :line, marked_by?: false
-			allow(joshua).to receive(:priority_1?).and_return(true)
+			allow(joshua).to receive(:priority_2?).and_return(false)
+			allow(joshua).to receive(:line_full?).and_return(false)
 			expect(joshua).to receive(:candidate_lines).twice.and_return([line1, line2])
 			expect(joshua.choose_own_line).to eq line1
 		end

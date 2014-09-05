@@ -63,8 +63,8 @@ module Joshua
 
 	def choose_own_line
 		candidate_lines.each {|line| return line if line.marked_by?(self) && priority_1?(line) }
-		candidate_lines.each {|line| return line if priority_1?(*line) }
-		# candidate_lines.select {|line| line.marked_by? self }
+		# test for this line is inadequate:
+		candidate_lines.each {|line| return line if priority_1?(line) }
 	end
 
 	def refine_squares
@@ -72,8 +72,8 @@ module Joshua
 	end
 
 	def recurring_squares
-		candidate_lines.flatten.select do |square|
-			square.mark.nil?
+		candidate_lines.flatten.reject do |square|
+			square.mark
 		end.get_mode
 	end
 
