@@ -162,7 +162,7 @@ describe Joshua do
 			joshua.random_tiebreak
 		end
 
-		xit "can pick the most frequently occuring unmarked squares from multiple sets of lines" do
+		it "picks the most frequently occuring unmarked squares from multiple sets of lines" do
 			square3 = double :square, mark: nil
 			square4 = double :square, mark: nil
 			square5 = double :square, mark: nil

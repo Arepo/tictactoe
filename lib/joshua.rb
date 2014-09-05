@@ -68,12 +68,13 @@ module Joshua
 	end
 
 	def refine_squares
-		# freq = arr.inject(Hash.new(0)) { |h,v| h[v] += 1; h }
-		p candidate_lines.flatten.first
-		frequency = candidate_lines.flatten.inject(Hash.new(0)) do |hash, square|
-			hash[square] += 1
-			square
-		end
+		candidate_squares.replace(recurring_squares)
+	end
+
+	def recurring_squares
+		candidate_lines.flatten.select do |square|
+			square.mark.nil?
+		end.get_mode
 	end
 
 	def random_tiebreak
