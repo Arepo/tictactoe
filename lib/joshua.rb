@@ -91,10 +91,13 @@ module Joshua
 	end
 
 	def square_recurrences
-		# byebug
 		key_lines.flatten.select do |square| 
 			candidate_squares.any? {|candidate| candidate.equal?(square)}
 		end
+	end
+
+	def final_candidates
+		square_recurrences.get_mode
 	end
 
 	def random_tiebreak

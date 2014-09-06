@@ -200,8 +200,15 @@ describe Joshua do
 			expect(joshua.key_lines).to eq([[square1, square2], [square2]])
 		end
 
-		xit "can check the frequency with which candidate squares appear in priority 2 and empty lines" do
-			joshua.candidate_squares << square0
+		it "having noted some squares as candidates, can select only those squares from the key lines" do
+			joshua.candidate_squares.push(square0, square3)
+			joshua.key_lines.push([square3], [square0, square3],[square0])
+			expect(joshua.square_recurrences).to eq [square3, square0, square3, square0]
+		end
+
+		it "can check the frequency with which candidate squares appear in priority 2 and empty lines" do
+			expect(joshua).to receive(:square_recurrences).and_return([square3, square0, square3, square0, square4])
+			expect(joshua.final_candidates).to eq [square3, square0]
 		end
 
 	end
@@ -256,12 +263,7 @@ describe Joshua do
 		end
 
 
-		it "having noted these squares as candidates, sees which are common to most empty or priority 2 lines" do
-			joshua.candidate_squares.push(square0, square3)
-			joshua.key_lines.push([square1, square2, square3], [square0, square5, square3],
-				[square4, square0, square5])
-			expect(joshua.square_recurrences).to eq [square3, square0, square3, square0]
-		end
+		
 
 	end
 
