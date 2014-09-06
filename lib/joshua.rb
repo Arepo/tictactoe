@@ -25,11 +25,19 @@ module Joshua
 	end
 
 	def your_turn
+		clear_candidates
 		prioritise_lines
 		return if playing_on_priority_1_line
 		return if playing_on_priority_2_line
 		return if playing_on_empty_line
 		return playing_on_leftover_square
+	end
+
+	def clear_candidates
+		# byebug
+		[candidate_lines, empty_lines, candidate_squares, key_lines].each do |dataset| 
+			dataset.clear
+		end
 	end
 
 	def playing_on_priority_1_line

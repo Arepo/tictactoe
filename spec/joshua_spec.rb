@@ -19,6 +19,20 @@ describe Joshua do
 
 	context "looking through lines" do
 
+		it "at the start of its turn clears the data from any previous turns" do
+			allow(joshua).to receive(:prioritise_lines)
+			allow(joshua).to receive(:playing_on_priority_1_line)
+			allow(joshua).to receive(:playing_on_priority_2_line)
+			allow(joshua).to receive(:playing_on_empty_line)
+			allow(joshua).to receive(:playing_on_leftover_square)
+			joshua.candidate_lines << [:line]
+			joshua.candidate_squares << [:square]
+			joshua.empty_lines << [:line]
+			joshua.key_lines << [:line]
+			joshua.your_turn
+			expect(joshua.candidate_lines + joshua.empty_lines + joshua.candidate_squares + joshua.key_lines).to be_empty
+		end
+
 		it "can look at the board's rows" do
 			expect(joshua.rows).to eq(joshua.board.rows)
 		end
