@@ -229,7 +229,7 @@ describe Joshua do
 			joshua.candidate_lines << line2
 			allow(joshua).to receive(:prioritise_lines)
 			expect(joshua).to receive(:choose_own_line).and_return(line2)
-			allow(joshua).to receive(:play_on)
+			allow(joshua).to receive(:play_on).and_return true
 			joshua.your_turn
 			expect(joshua.candidate_lines).to eq line2
 		end
