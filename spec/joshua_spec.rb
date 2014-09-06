@@ -172,9 +172,8 @@ describe Joshua do
 		end
 
 		it "can pick an empty square at random from a set of 1 or more" do
-			joshua.candidate_squares.replace([:square1, :square2, :square3])
 			expect(joshua.candidate_squares).to receive(:sample)
-			joshua.random_tiebreak
+			joshua.random_square_from(joshua.candidate_squares)
 		end
 
 		it "picks the most frequently occuring unmarked squares from multiple sets of lines" do
@@ -189,6 +188,7 @@ describe Joshua do
 			joshua.candidate_lines << [square1, square0, square3]
 			joshua.candidate_lines << [square1, square0, square4]
 			allow(joshua).to receive(:priority_1?)
+			allow(joshua).to receive(:play_on)
 			allow(joshua).to receive(:priority_2?).and_return(true)
 			joshua.your_turn
 			expect(joshua.candidate_squares).to eq [square0, square3, square4]
@@ -254,6 +254,7 @@ describe Joshua do
 			allow(joshua).to receive(:candidate_lines).and_return([:not_priority_one]).ordered
 			allow(joshua).to receive(:priority_1?).and_return(false)
 			allow(joshua).to receive(:priority_2?).and_return(true)
+			allow(joshua).to receive(:play_on)
 			allow(joshua).to receive(:candidate_lines).and_return([square0]).ordered
 			expect(square0).to receive :uniq
 			expect(joshua).to receive(:priority_2?)
@@ -262,8 +263,16 @@ describe Joshua do
 			joshua.your_turn
 		end
 
-
-		
+		it "then plays randomly on the priority 2 squares common to the most lines" do
+			allow(joshua).to receive(:prioritise_lines)
+			allow(joshua).to receive(:candidate_lines).and_return([square0])
+			allow(joshua).to receive(:priority_1?).and_return(false)
+			allow(joshua).to receive(:priority_2?).and_return(true)
+			expect(joshua).to receive(:random_square_from)
+			expect(joshua).to receive(:final_candidates)
+			expect(joshua).to receive(:play_on)
+			joshua.your_turn
+		end
 
 	end
 
