@@ -28,6 +28,8 @@ module Joshua
 		prioritise_lines
 		return if playing_on_priority_1_line
 		return if playing_on_priority_2_line
+		return if playing_on_empty_line
+		return playing_on_leftover_square
 	end
 
 	def playing_on_priority_1_line
@@ -42,6 +44,16 @@ module Joshua
 			candidate_squares.replace(vacant_squares_in(candidate_lines).uniq)
 			play_on(random_square_from(final_candidates))
 		end
+	end
+
+	def playing_on_empty_line
+		if !empty_lines.empty?
+			play_on(random_square_from(empty_lines.flatten.get_mode))
+		end
+	end
+
+	def playing_on_leftover_square
+		play_on(random_square_from(vacant_squares_in(rows)))
 	end
 
 	def prioritise_lines
