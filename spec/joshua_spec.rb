@@ -201,6 +201,7 @@ describe Joshua do
 		it "notes each unmarked square from the priority 2 lines as a candidate square" do
 			joshua.candidate_lines << [square1, square0, square3]
 			joshua.candidate_lines << [square1, square0, square4]
+			allow(joshua).to receive(:clear_candidates)
 			allow(joshua).to receive(:priority_1?)
 			allow(joshua).to receive(:play_on)
 			allow(joshua).to receive(:priority_2?).and_return(true)
@@ -243,6 +244,7 @@ describe Joshua do
 			line2 = [square2, square2, square0]
 			joshua.candidate_lines << line1
 			joshua.candidate_lines << line2
+			allow(joshua).to receive(:clear_candidates)
 			allow(joshua).to receive(:prioritise_lines)
 			expect(joshua).to receive(:choose_own_line).and_return(line2)
 			allow(joshua).to receive(:play_on).and_return true
@@ -268,6 +270,7 @@ describe Joshua do
 		end
 
 		it "if it has found any priority two lines, notes the empty squares from them" do
+			allow(joshua).to receive(:clear_candidates)
 			allow(joshua).to receive(:prioritise_lines)
 			allow(joshua).to receive(:playing_on_priority_1_line).and_return false
 			allow(joshua).to receive(:priority_2?).and_return true
@@ -281,6 +284,7 @@ describe Joshua do
 		end
 
 		it "then plays randomly on the priority 2 squares common to the most lines" do
+			allow(joshua).to receive(:clear_candidates)
 			allow(joshua).to receive(:prioritise_lines)
 			allow(joshua).to receive(:priority_1?).and_return(false)
 			allow(joshua).to receive(:candidate_lines).and_return([square0])
@@ -292,6 +296,7 @@ describe Joshua do
 		end
 
 		it "if no priority 1 or two lines, plays on a square common to as many empty lines as possible, if there are any empty lines" do
+			allow(joshua).to receive(:clear_candidates)
 			allow(joshua).to receive(:prioritise_lines)
 			expect(joshua).to receive(:empty_lines).twice.and_return([:line1, :line2])
 			expect(joshua).to receive(:random_square_from)
