@@ -35,7 +35,8 @@ module Joshua
 	def playing_on_priority_1_line
 		if !candidate_lines.empty? && priority_1?(candidate_lines.first)
 			candidate_lines.replace(choose_own_line) 
-			play_on(vacant_squares_in(candidate_lines))
+			# byebug
+			play_on(vacant_squares_in(candidate_lines).first)
 		end
 	end
 	

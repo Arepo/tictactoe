@@ -248,7 +248,7 @@ describe Joshua do
 			allow(joshua).to receive(:candidate_lines).and_return([:not_empty])
 			allow(joshua).to receive(:priority_1?).and_return(true)
 			allow(joshua).to receive(:choose_own_line).and_return([])
-			allow(joshua).to receive(:vacant_squares_in).and_return(square1)
+			allow(joshua).to receive(:vacant_squares_in).and_return([square1])
 			expect(joshua).to receive(:play_on).with(square1).and_return true
 			joshua.your_turn
 		end
