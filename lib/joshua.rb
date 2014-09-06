@@ -16,6 +16,10 @@ module Joshua
 		@empty_lines ||= [] 
 	end
 
+	def key_lines
+		@key_lines ||= (candidate_lines + empty_lines)
+	end
+
 	def initialize
 		@board = Board.instance
 	end
@@ -29,6 +33,7 @@ module Joshua
 		end
 		if !candidate_lines.empty? && priority_2?(candidate_lines.first)
 			candidate_squares.replace(vacant_squares_in(candidate_lines).uniq)
+			
 		end
 	end
 
@@ -63,12 +68,6 @@ module Joshua
 		true if squares.none?(&:mark)
 	end
 
-	def appearances_of(square)
-		candidate_lines.inject(0) do |appearances, row|
-			row.include?(square) ? appearances + 1 : appearances
-		end
-	end
-
 	def line_full?(squares)
 		squares.all? {|square| square.mark }
 	end
@@ -89,6 +88,13 @@ module Joshua
 
 	def recurring_candidate_squares
 		vacant_squares_in(candidate_lines).get_mode
+	end
+
+	def square_recurrences
+		# byebug
+		key_lines.flatten.select do |square| 
+			candidate_squares.any? {|candidate| candidate.equal?(square)}
+		end
 	end
 
 	def random_tiebreak

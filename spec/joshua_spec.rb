@@ -13,6 +13,9 @@ describe Joshua do
 	let(:square0) {double :square, mark: nil}
 	let(:square1) {double :square, mark: :x}
 	let(:square2) {double :square, mark: :o}
+	let(:square3) {double :square, mark: nil}
+	let(:square4) {double :square, mark: nil}
+	let(:square5) {double :square, mark: nil}
 
 	context "looking through lines" do
 
@@ -131,16 +134,28 @@ describe Joshua do
 
 	end
 
-	context "picking out squares" do
+	context "choosing among candidate lines" do
 
-		it "can tell how many times a square features in multiple sets of squares" do
-			row1 = [:square1, :circle, :circle]
-			row2 = [:square2, :circle, :circle]
-			row3 = [:circle, :square2, :circle]
-			joshua.candidate_lines.push(*[row1, row2, row3])
-			expect(joshua.appearances_of(:square1)).to eq 1
-			expect(joshua.appearances_of(:square2)).to eq 2
+		it "chooses among equal priority 1 lines by the one which contains its mark(s)" do
+			line1 = double :line, marked_by?: false
+			line2 = double :line, marked_by?: true
+			allow(joshua).to receive(:priority_1?).and_return(true)
+			expect(joshua).to receive(:candidate_lines).and_return([line1, line2])
+			expect(joshua.choose_own_line).to eq line2
 		end
+
+		it "if no priority 1 lines contain its mark, chooses any remaining priority 1 line" do
+			line1 = double :line, marked_by?: false, uniq: [:is, :priority_1]
+			line2 = double :line, marked_by?: false
+			allow(joshua).to receive(:priority_2?).and_return(false)
+			allow(joshua).to receive(:line_full?).and_return(false)
+			expect(joshua).to receive(:candidate_lines).twice.and_return([line1, line2])
+			expect(joshua.choose_own_line).to eq line1
+		end
+
+	end
+
+	context "picking out squares" do
 
 		it "can tell if a set of squares is full" do
 			expect(joshua.line_full?([square1, square1, square0])).to be_falsy
@@ -163,9 +178,6 @@ describe Joshua do
 		end
 
 		it "picks the most frequently occuring unmarked squares from multiple sets of lines" do
-			square3 = double :square, mark: nil
-			square4 = double :square, mark: nil
-			square5 = double :square, mark: nil
 			joshua.candidate_lines << [square1, square0, square3]
 			joshua.candidate_lines << [square1, square0, square4]
 			joshua.candidate_lines << [square1, square3, square5]
@@ -174,8 +186,6 @@ describe Joshua do
 		end
 
 		it "notes each unmarked square from the priority 2 lines as a candidate square" do
-			square3 = double :square, mark: nil
-			square4 = double :square, mark: nil
 			joshua.candidate_lines << [square1, square0, square3]
 			joshua.candidate_lines << [square1, square0, square4]
 			allow(joshua).to receive(:priority_1?)
@@ -184,30 +194,14 @@ describe Joshua do
 			expect(joshua.candidate_squares).to eq [square0, square3, square4]
 		end
 
-		it "can check the frequency with which candidate squares appear in priority 2 and empty lines" do
-			square3 = double :square, mark: nil
+		it "saves all the lines from candidate lines and empty lines key lines together" do
+			joshua.candidate_lines << [square1, square2]
+			joshua.empty_lines << [square2]
+			expect(joshua.key_lines).to eq([[square1, square2], [square2]])
+		end
+
+		xit "can check the frequency with which candidate squares appear in priority 2 and empty lines" do
 			joshua.candidate_squares << square0
-		end
-
-	end
-
-	context "choosing among candidate lines" do
-
-		it "chooses among equal priority 1 lines by the one which contains its mark(s)" do
-			line1 = double :line, marked_by?: false
-			line2 = double :line, marked_by?: true
-			allow(joshua).to receive(:priority_1?).and_return(true)
-			expect(joshua).to receive(:candidate_lines).and_return([line1, line2])
-			expect(joshua.choose_own_line).to eq line2
-		end
-
-		it "if no priority 1 lines contain its mark, chooses any remaining priority 1 line" do
-			line1 = double :line, marked_by?: false, uniq: [:is, :priority_1]
-			line2 = double :line, marked_by?: false
-			allow(joshua).to receive(:priority_2?).and_return(false)
-			allow(joshua).to receive(:line_full?).and_return(false)
-			expect(joshua).to receive(:candidate_lines).twice.and_return([line1, line2])
-			expect(joshua.choose_own_line).to eq line1
 		end
 
 	end
@@ -248,15 +242,25 @@ describe Joshua do
 			joshua.your_turn
 		end
 
-		it "if it has found one or more priority two lines, finds the squares that appear most in priority 2 or 3 lines" do
+		it "if it has found any priority two lines, notes the empty squares from them" do
 			allow(joshua).to receive(:prioritise_lines)
-			allow(joshua).to receive(:candidate_lines).and_return([:foo]).ordered
+			allow(joshua).to receive(:candidate_lines).and_return([:not_priority_one]).ordered
 			allow(joshua).to receive(:priority_1?).and_return(false)
 			allow(joshua).to receive(:priority_2?).and_return(true)
 			allow(joshua).to receive(:candidate_lines).and_return([square0]).ordered
+			expect(square0).to receive :uniq
 			expect(joshua).to receive(:priority_2?)
 			expect(joshua.candidate_squares).to receive(:replace)
+			expect(joshua).to receive(:vacant_squares_in).with([square0]).and_return square0
 			joshua.your_turn
+		end
+
+
+		it "having noted these squares as candidates, sees which are common to most empty or priority 2 lines" do
+			joshua.candidate_squares.push(square0, square3)
+			joshua.key_lines.push([square1, square2, square3], [square0, square5, square3],
+				[square4, square0, square5])
+			expect(joshua.square_recurrences).to eq [square3, square0, square3, square0]
 		end
 
 	end
