@@ -55,7 +55,7 @@ module Joshua
 	end
 
 	def playing_on_empty_line
-		if !empty_lines.empty?
+		unless empty_lines.empty?
 			play_on(random_square_from(empty_lines.flatten.get_mode))
 		end
 	end

@@ -157,12 +157,10 @@ describe Joshua do
 			expect(joshua.line_full?([square1, square1, square0])).to be_falsy
 			expect(joshua.line_full?([square1, square1, square1])).to be true
 			expect(joshua.line_full?([square1, square2, square0])).to be_falsy
-			expect(joshua.line_full?([square2, square2, square2])).to be true
 		end
 
 		it "selects the empty square from a set of three" do
 			expect(joshua.vacant_squares_in(square1, square1, square0)).to eq [square0]
-			expect(joshua.vacant_squares_in(square2, square2, square0)).to eq [square0]
 			expect(joshua.vacant_squares_in(square2, square2, square2)).to eq []
 			expect(joshua.vacant_squares_in(square1, square2, square0)).to eq [square0]
 		end
@@ -205,7 +203,7 @@ describe Joshua do
 
 		it "on being prompted for its turn, prioritises lines from the grid" do
 			ignore(:playing_on_priority_1_line, :playing_on_priority_1_line, :playing_on_empty_line, :playing_on_leftover_square)
-			expect(joshua).to receive(:prioritise_lines)
+			ensure_joshua_receives(:prioritise_lines)
 			joshua.your_turn
 		end
 
@@ -243,7 +241,7 @@ describe Joshua do
 			allow(joshua).to receive(:play_on).and_return true
 			allow(joshua).to receive(:candidate_lines).and_return([square0]).ordered
 			expect(square0).to receive :uniq
-			expect(joshua).to receive(:priority_2?)
+			ensure_joshua_receives(:priority_2?)
 			expect(joshua.candidate_squares).to receive(:replace)
 			expect(joshua).to receive(:vacant_squares_in).with([square0]).and_return square0
 			joshua.your_turn
@@ -253,26 +251,21 @@ describe Joshua do
 			ignore(:clear_previous_candidates, :prioritise_lines, :priority_1?)
 			allow(joshua).to receive(:candidate_lines).and_return([square0])
 			allow(joshua).to receive(:priority_2?).and_return(true)
-			expect(joshua).to receive(:random_square_from)
-			expect(joshua).to receive(:final_candidates)
-			expect(joshua).to receive(:play_on).and_return true
+			ensure_joshua_receives(:random_square_from, :final_candidates, :play_on)
 			joshua.your_turn
 		end
 
 		it "if no priority 1 or two lines, plays on a square common to as many empty lines as possible, if there are any empty lines" do
 			ignore(:clear_previous_candidates, :prioritise_lines)
 			expect(joshua).to receive(:empty_lines).twice.and_return([:line1, :line2])
-			expect(joshua).to receive(:random_square_from)
-			expect(joshua).to receive(:play_on).and_return true
+			ensure_joshua_receives(:random_square_from, :play_on)
 			joshua.your_turn
 		end
 
 		it "if nothing else left, plays on a random empty square" do
 			ignore(:playing_on_priority_1_line, :playing_on_priority_2_line, :playing_on_empty_line)
 			expect(joshua).to receive(:rows).exactly(4).times.and_return(joshua.rows)
-			expect(joshua).to receive(:vacant_squares_in)
-			expect(joshua).to receive(:random_square_from)
-			expect(joshua).to receive(:play_on)
+			ensure_joshua_receives(:vacant_squares_in, :random_square_from, :play_on)
 			joshua.your_turn
 		end
 
@@ -280,6 +273,10 @@ describe Joshua do
 
 	def ignore(*methods)
 		methods.each {|method| allow(joshua).to receive(method) }
+	end
+
+	def ensure_joshua_receives(*methods)
+		methods.each {|method| expect(joshua).to receive(method).and_return(true) }
 	end
 
 	def no_priority_twos
