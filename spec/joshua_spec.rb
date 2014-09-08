@@ -190,14 +190,6 @@ describe Joshua do
 			joshua.random_square_from(joshua.candidate_squares)
 		end
 
-		it "picks the most frequently occuring unmarked squares from multiple sets of lines" do
-			joshua.candidate_lines << [square1, square0, square3]
-			joshua.candidate_lines << [square1, square0, square4]
-			joshua.candidate_lines << [square1, square3, square5]
-			joshua.refine_squares
-			expect(joshua.candidate_squares).to eq [square0, square3]
-		end
-
 		it "notes each unmarked square from the priority 2 lines as a candidate square" do
 			joshua.candidate_lines << [square1, square0, square3]
 			joshua.candidate_lines << [square1, square0, square4]
@@ -217,14 +209,13 @@ describe Joshua do
 
 		it "having noted some squares as candidates, can select only those squares from the key lines" do
 			joshua.candidate_squares.push(square0, square3)
-			# byebug
 			joshua.candidate_lines.push([square3], [square0, square3])
 			joshua.empty_lines.push([square0, square4])
-			expect(joshua.square_recurrences).to eq [square3, square0, square3, square0]
+			expect(joshua.recurring_candidate_squares).to eq [square3, square0, square3, square0]
 		end
 
 		it "can check the frequency with which candidate squares appear in priority 2 and empty lines" do
-			expect(joshua).to receive(:square_recurrences).and_return([square3, square0, square3, square0, square4])
+			expect(joshua).to receive(:recurring_candidate_squares).and_return([square3, square0, square3, square0, square4])
 			expect(joshua.final_candidates).to eq [square3, square0]
 		end
 

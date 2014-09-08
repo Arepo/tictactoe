@@ -44,7 +44,6 @@ module Joshua
 	def playing_on_priority_1_line
 		if !candidate_lines.empty? && priority_1?(candidate_lines.first)
 			candidate_lines.replace(choose_own_line) 
-			# byebug
 			play_on(vacant_squares_in(candidate_lines).first)
 		end
 	end
@@ -111,22 +110,14 @@ module Joshua
 		candidate_lines.each {|line| return line if priority_1?(line) }
 	end
 
-	def refine_squares
-		candidate_squares.replace(recurring_candidate_squares)
-	end
-
 	def recurring_candidate_squares
-		vacant_squares_in(candidate_lines).get_mode
-	end
-
-	def square_recurrences
 		key_lines.flatten.select do |square| 
 			candidate_squares.any? {|candidate| candidate.equal?(square)}
 		end
 	end
 
 	def final_candidates
-		square_recurrences.get_mode
+		recurring_candidate_squares.get_mode
 	end
 
 	def random_square_from(squares)
