@@ -17,8 +17,8 @@ module Joshua
 		@empty_lines ||= [] 
 	end
 
-	def key_lines
-		@key_lines = (candidate_lines + empty_lines)
+	def active_lines
+		@active_lines = (candidate_lines + empty_lines)
 	end
 
 	def initialize
@@ -26,7 +26,7 @@ module Joshua
 	end
 
 	def your_turn
-		clear_candidates
+		clear_previous_candidates
 		prioritise_lines
 		return if playing_on_priority_1_line
 		return if playing_on_priority_2_line
@@ -34,16 +34,15 @@ module Joshua
 		return playing_on_leftover_square
 	end
 
-	def clear_candidates
-		# byebug
-		[candidate_lines, empty_lines, candidate_squares, key_lines].each do |dataset| 
+	def clear_previous_candidates
+		[candidate_lines, empty_lines, candidate_squares, active_lines].each do |dataset| 
 			dataset.clear
 		end
 	end
 
 	def playing_on_priority_1_line
 		if !candidate_lines.empty? && priority_1?(candidate_lines.first)
-			candidate_lines.replace(choose_own_line) 
+			candidate_lines.replace(his_own_line) 
 			play_on(vacant_squares_in(candidate_lines).first)
 		end
 	end
@@ -101,17 +100,17 @@ module Joshua
 	end
 
 	def vacant_squares_in(*squares)
-		squares.flatten.reject {|square| square.mark }
+		squares.flatten.reject(&:mark)
 	end
 
-	def choose_own_line
+	def his_own_line
 		candidate_lines.each {|line| return line if line.marked_by?(self) && priority_1?(line) }
 		# test for this line is inadequate:
 		candidate_lines.each {|line| return line if priority_1?(line) }
 	end
 
 	def recurring_candidate_squares
-		key_lines.flatten.select do |square| 
+		active_lines.flatten.select do |square| 
 			candidate_squares.any? {|candidate| candidate.equal?(square)}
 		end
 	end
