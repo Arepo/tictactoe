@@ -52,10 +52,6 @@ module Joshua
 	def playing_on_priority_2_line
 		if !candidate_lines.empty? && priority_2?(candidate_lines.first)
 			candidate_squares.replace(vacant_squares_in(candidate_lines).uniq)
-			# puts '#' * 50
-			# p final_candidates
-			# puts '#' * 50
-			# byebug
 			play_on(random_square_from(final_candidates))
 		end
 	end

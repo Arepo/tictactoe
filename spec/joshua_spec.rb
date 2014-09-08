@@ -217,7 +217,9 @@ describe Joshua do
 
 		it "having noted some squares as candidates, can select only those squares from the key lines" do
 			joshua.candidate_squares.push(square0, square3)
-			joshua.key_lines.push([square3], [square0, square3],[square0])
+			# byebug
+			joshua.candidate_lines.push([square3], [square0, square3])
+			joshua.empty_lines.push([square0, square4])
 			expect(joshua.square_recurrences).to eq [square3, square0, square3, square0]
 		end
 
