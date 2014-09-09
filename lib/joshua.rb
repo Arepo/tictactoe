@@ -28,6 +28,7 @@ module Joshua
 	def your_turn
 		clear_previous_candidates
 		prioritise_lines
+		puts "The computer moves:"
 		return if playing_on_priority_1_line
 		return if playing_on_priority_2_line
 		return if playing_on_empty_line

@@ -61,7 +61,6 @@ describe Joshua do
 
 		it "can tell if a set of three squares has none marked, and considers it third priority" do
 			expect(joshua.priority_3?([square1, square0, square0])).to be_falsy
-			expect(joshua.priority_3?([square0, square2, square0])).to be_falsy
 			expect(joshua.priority_3?([square1, square1, square0])).to be_falsy
 			expect(joshua.priority_3?([square1, square2, square0])).to be_falsy
 			expect(joshua.priority_3?([square0, square0, square0])).to be true
@@ -174,7 +173,7 @@ describe Joshua do
 			joshua.candidate_lines << [square1, square0, square3]
 			joshua.candidate_lines << [square1, square0, square4]
 			ignore(:clear_previous_candidates, :priority_1?, :play_on)
-			allow(joshua).to receive(:priority_2?).and_return(true)
+			accept_and_mimic(:priority_2?)
 			joshua.your_turn
 			expect(joshua.candidate_squares).to eq [square0, square3, square4]
 		end
@@ -214,7 +213,7 @@ describe Joshua do
 			joshua.candidate_lines << line2
 			ignore(:clear_previous_candidates, :prioritise_lines)
 			expect(joshua).to receive(:his_own_line).and_return(line2)
-			allow(joshua).to receive(:play_on).and_return true
+			accept_and_mimic(:play_on)
 			joshua.your_turn
 			expect(joshua.candidate_lines).to eq line2
 		end
@@ -227,19 +226,14 @@ describe Joshua do
 
 		it "if it has found a priority one line, plays on the line's free square" do
 			ignore(:prioritise_lines)
-			allow(joshua).to receive(:candidate_lines).and_return([:not_empty])
-			allow(joshua).to receive(:priority_1?).and_return(true)
-			allow(joshua).to receive(:his_own_line).and_return([])
-			allow(joshua).to receive(:vacant_squares_in).and_return([square1])
-			expect(joshua).to receive(:play_on).with(square1).and_return true
+			accept_and_mimic(:candidate_lines, :priority_1?, :his_own_line, :vacant_squares_in)
+			expect(joshua).to receive(:play_on).with(square0).and_return true
 			joshua.your_turn
 		end
 
 		it "if it has found any priority two lines, notes the empty squares from them" do
 			ignore(:clear_previous_candidates, :prioritise_lines, :playing_on_priority_1_line)
-			allow(joshua).to receive(:priority_2?).and_return true
-			allow(joshua).to receive(:play_on).and_return true
-			allow(joshua).to receive(:candidate_lines).and_return([square0]).ordered
+			accept_and_mimic(:priority_2?, :play_on, :candidate_lines)
 			expect(square0).to receive :uniq
 			ensure_joshua_receives(:priority_2?)
 			expect(joshua.candidate_squares).to receive(:replace)
@@ -249,8 +243,7 @@ describe Joshua do
 
 		it "then plays randomly on the priority 2 squares common to the most lines" do
 			ignore(:clear_previous_candidates, :prioritise_lines, :priority_1?)
-			allow(joshua).to receive(:candidate_lines).and_return([square0])
-			allow(joshua).to receive(:priority_2?).and_return(true)
+			accept_and_mimic(:candidate_lines, :priority_2?)
 			ensure_joshua_receives(:random_square_from, :final_candidates, :play_on)
 			joshua.your_turn
 		end
@@ -273,6 +266,10 @@ describe Joshua do
 
 	def ignore(*methods)
 		methods.each {|method| allow(joshua).to receive(method) }
+	end
+
+	def accept_and_mimic(*methods)
+		methods.each {|method| allow(joshua).to receive(method).and_return([square0]) }
 	end
 
 	def ensure_joshua_receives(*methods)

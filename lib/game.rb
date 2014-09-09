@@ -35,7 +35,7 @@ class Game
 			puts "Congratulations #{player == player1 ? "Player 1" : "Player 2"}. Your victory will be immortalised by the bards!"
 			exit
 		elsif board_full?
-			puts "A strange game. The only winning move is not to play. How about a nice game of chess?"
+			puts "A strange game. The only winning move is not to play. How about a nice game of chess?\n\n"
 			exit
 		end
 	end
