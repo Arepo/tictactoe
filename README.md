@@ -26,3 +26,17 @@ In this version, human players will be prompted to enter coordinates one at a ti
 The winner is the first player to fill a line (horizontally, vertically or diagonally) with their mark. If the board is filled with neither player having completed a line, the game is a draw.
 
 Given perfect play, the game will always be a draw. If you play it more than twice, you should probably reexamine your life.
+
+Future Improvements
+------
+
+I think this is 'good enough' for now, given that I don't actually plan to expand the program. That said, there are some definite flaws (\*cough\* I mean learning experiences),  in retrospect:
+
+ * High level testing was a mess, with too many metamethod tests that checked for and/or had to allow for precise method call sequences. In retrospect a better solution would probably have been not to use so many stubs and mocks for the higher level tests, but perhaps to separate them into a different spec file and check that when I ran the method, the status of real instances of the objects changed as I expected. I'm currently reading through Sandi Metz's Practical Object-Oriented Design in Ruby, which has an impending chapter that sounds relevant.
+ * Some methods were still too bulky. If I ever expected to extend the program, they'd be the first things I'd want to improve, but for what it is, I left them once they felt good enough.
+ * The joshua module seems worryingly long. I'm not really sure if this is actually a problem. It only has one responsibility in the sense of 'not losing the game', but conceptually this could obviously be broken down further.
+ * Joshua himself is a heavy compromise on the NxN extensibility. I had to spike a bit to get him to work at all, so while I hope his algorithms wouldn't be too difficult to modify, they certainly wouldn't get far as they are.
+ * I felt a bit dirty monkeypatching the Array class rather than creating one that inherited from it, but it was the simplest way I could think of to allow transposed rows to still behave like normal rows. Again, I'm not sure yet if this is bad practice in such a case.
+ * I accidentally cheated at one problem - getting an array of the most common elements in an array. When Googling to find if Ruby existing options that would help, I found a page that just wrote out a solution far more elegant than I would have come up with, but having seen it it was etched into my brain. I'd like to return to that problem in a month or two, having hopefully forgotten the solution, to see if I come up with something as good, or almost as good unassisted.
+ * I think there's too much interweaving of classes. I tried to keep it to a minimum, but if I were to redo the whole thing, I'd be more comfortable with a clearer hierarchy of class tasks.
+ 
