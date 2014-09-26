@@ -14,8 +14,8 @@ describe Game do
 	context 'setup' do
 
 		it 'has two players' do
-			expect(game.player1.class).to eq Player
-			expect(game.player2.class).to eq Player
+			expect(game.player1.class).to eq HumanClass
+			expect(game.player2.class).to eq HumanClass
 		end
 
 		it 'creates as many AI players as required, always letting the human play first' do

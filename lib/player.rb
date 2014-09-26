@@ -6,10 +6,9 @@ class Player
 	attr_reader :mark
 	attr_reader :board
 
-	def initialize(player_type = {human: true})
+	def initialize
 		@mark = Mark.new(self)
 		@board = Board.instance
-		@player_type = player_type
 	end
 
 	def play_on(square)

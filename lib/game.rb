@@ -51,14 +51,14 @@ class Game
 		# must be a better way of writing this
 		case number_of_humans
 		when 0
-			@player1 = Player.new(human: false)
-			@player2 = Player.new(human: false)
+			@player1 = JoshuaClass.new
+			@player2 = JoshuaClass.new
 		when 1
-			@player1 = Player.new
-			@player2 = Player.new(human: false)
+			@player1 = HumanClass.new
+			@player2 = JoshuaClass.new
 		when 2
-			@player1 = Player.new
-			@player2 = Player.new
+			@player1 = HumanClass.new
+			@player2 = HumanClass.new
 		else
 			puts "Please enter 0, 1 or 2"
 			create_players
