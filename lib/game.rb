@@ -59,6 +59,9 @@ class Game
 		when 2
 			@player1 = Player.new
 			@player2 = Player.new
+		else
+			puts "Please enter 0, 1 or 2"
+			create_players
 		end
 	end
 

@@ -6,19 +6,10 @@ class Square
 		@mark = new_mark unless mark
 	end
 
-	# def mark=(new_mark)
-	# 	# return false if mark - doesn't work; setter methods have hardcoded return value of (arg)
-	# 	@mark = new_mark unless mark
-	# end
-
 	def ==(other_square)
 		return false unless mark && other_square.mark
 		return true if (other_square.source == mark.source) 
 	end
-
-	# def eql?(other_square)
-	# 	self == (other_square)
-	# end
 
 	def to_s
 		return "_" unless mark

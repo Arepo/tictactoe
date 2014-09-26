@@ -27,7 +27,6 @@ module WinChecker
 	end
 
 	def equivalent_squares_in?(squares)
-		# squares.map(&:owner).uniq.length == 1
 		return true if squares.inject do |last_square, this_square| 
 			last_square == this_square ? this_square : false 
 		end

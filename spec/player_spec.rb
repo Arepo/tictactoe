@@ -1,6 +1,6 @@
 require 'player'
 
-describe Player do 
+describe Player do
 
 	let(:malcolm){Player.new}
 	let(:inara)  {Player.new}
@@ -19,6 +19,10 @@ describe Player do
 	it "can translate row/square coordinates into the square at them" do
 		expect(malcolm.square_at(1, 2)).to equal malcolm.board.row(1).square(2)
 		expect(malcolm.square_at(2, 3)).to equal malcolm.board.row(2).square(3)
+	end
+
+	it 'raises a notimplemented error if someone calls your_turn on it' do
+		expect{malcolm.your_turn}.to raise_error(NotImplementedError)
 	end
 
 end
