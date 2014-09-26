@@ -1,6 +1,6 @@
 require_relative 'player'
 
-class HumanClass < Player
+class HumanPlayer < Player
 
 	def get_row
 		puts "Which row would you like to play on (1, 2 or 3)?"

@@ -1,6 +1,6 @@
 require_relative 'player'
 
-class JoshuaClass < Player
+class ComputerPlayer < Player
 
 	attr_reader :board
 

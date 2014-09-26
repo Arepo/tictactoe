@@ -1,4 +1,5 @@
-require_relative 'player'
+require_relative 'human_player'
+require_relative 'computer_player'
 require_relative 'win_checker'
 
 class Game
@@ -51,14 +52,14 @@ class Game
 		# must be a better way of writing this
 		case number_of_humans
 		when 0
-			@player1 = JoshuaClass.new
-			@player2 = JoshuaClass.new
+			@player1 = ComputerPlayer.new
+			@player2 = ComputerPlayer.new
 		when 1
-			@player1 = HumanClass.new
-			@player2 = JoshuaClass.new
+			@player1 = HumanPlayer.new
+			@player2 = ComputerPlayer.new
 		when 2
-			@player1 = HumanClass.new
-			@player2 = HumanClass.new
+			@player1 = HumanPlayer.new
+			@player2 = HumanPlayer.new
 		else
 			puts "Please enter 0, 1 or 2"
 			create_players

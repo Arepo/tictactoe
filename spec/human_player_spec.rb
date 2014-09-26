@@ -1,12 +1,12 @@
-require 'human_class'
+require 'human_player'
 
-describe HumanClass do
+describe HumanPlayer do
 
 	before do
-		allow_any_instance_of(HumanClass).to receive(:puts)
+		allow_any_instance_of(HumanPlayer).to receive(:puts)
 	end
 
-	let(:human) {HumanClass.new}
+	let(:human) {HumanPlayer.new}
 
 	context "on a human's turn" do
 

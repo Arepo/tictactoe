@@ -1,12 +1,12 @@
-require 'joshua_class'
+require 'computer_player'
 
-describe JoshuaClass do 
+describe ComputerPlayer do 
 
 	before do
 		Singleton.__init__(Board)
 	end
 
-	let(:joshua) {JoshuaClass.new}
+	let(:joshua) {ComputerPlayer.new}
 	let(:square0) {double :square, mark: nil}
 	let(:square1) {double :square, mark: :x}
 	let(:square2) {double :square, mark: :o}
