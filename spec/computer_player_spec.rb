@@ -259,6 +259,16 @@ describe ComputerPlayer do
 			joshua.your_turn
 		end
 
+		it "playing on a square, updates the board to have its mark on that square" do
+			joshua.your_turn
+			expect(joshua.board.row(2).square(2).source).to eq joshua
+			# ignore(:clear_previous_candidates, :prioritise_lines)
+			# joshua.candidate_lines.push(joshua.board.row(1))
+			# allow(joshua).to receive(:priority_1?)
+			# byebug
+			# "ok"
+		end
+
 	end
 
 	def ignore(*methods)

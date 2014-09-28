@@ -17,6 +17,7 @@ class Game
 	def run_game
 		print "Player 1: "; run_turn_for(player1)
 		print "Player 2: "; run_turn_for(player2)
+		# exit
 	end
 
 	def run_turn_for(player)
