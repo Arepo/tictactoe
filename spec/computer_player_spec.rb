@@ -261,26 +261,23 @@ describe ComputerPlayer do
 
 		it "playing on a square, updates the board to have its mark on that square" do
 			joshua.your_turn
+			# joshua's turn on an empty board should always be to 
+			# play on the centre square (he's not very sporting)
 			expect(joshua.board.row(2).square(2).source).to eq joshua
-			# ignore(:clear_previous_candidates, :prioritise_lines)
-			# joshua.candidate_lines.push(joshua.board.row(1))
-			# allow(joshua).to receive(:priority_1?)
-			# byebug
-			# "ok"
 		end
 
 	end
 
 	def ignore(*methods)
-		methods.each {|method| allow(joshua).to receive(method) }
+		methods.each { |method| allow(joshua).to receive(method) }
 	end
 
 	def accept_and_mimic(*methods)
-		methods.each {|method| allow(joshua).to receive(method).and_return([square0]) }
+		methods.each { |method| allow(joshua).to receive(method).and_return([square0]) }
 	end
 
 	def ensure_joshua_receives(*methods)
-		methods.each {|method| expect(joshua).to receive(method).and_return(true) }
+		methods.each { |method| expect(joshua).to receive(method).and_return(true) }
 	end
 
 	def no_priority_twos

@@ -1,4 +1,5 @@
 require_relative 'player'
+require 'byebug'
 
 class ComputerPlayer < Player
 
@@ -18,10 +19,6 @@ class ComputerPlayer < Player
 
 	def active_lines
 		@active_lines = (candidate_lines + empty_lines)
-	end
-
-	def initialize
-		@board = Board.instance
 	end
 
 	def your_turn
