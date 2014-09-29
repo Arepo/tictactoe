@@ -6,12 +6,12 @@ class Game
 
 	include WinChecker
 
-	attr_reader :player1, :player2, :players
+	attr_reader :player1, :player2
 
 	def initialize
 		super
 		create_players
-		setup_players
+		setup_players(get_human_count)
 		display
 	end
 
@@ -21,6 +21,10 @@ class Game
 
 	def player_2
 		@players[1]
+	end
+
+	def players
+		@players ||= []
 	end
 
 	def run_game
@@ -53,18 +57,19 @@ class Game
 
 	private
 
-	def number_of_humans
+	def get_human_count
 		puts "How many humans are playing (0, 1 or 2)?"
 		gets.chomp.to_i
 	end
 
-	def setup_players
-		@players = [Player.new, Player.new]
+	def setup_players(human_count)
+		human_count.times {players << HumanPlayer.new}
+		(2 - human_count).times {players << ComputerPlayer.new}
 	end
 
 	def create_players
 		# must be a better way of writing this
-		case number_of_humans
+		case get_human_count
 		when 0
 			@player1 = ComputerPlayer.new
 			@player2 = ComputerPlayer.new

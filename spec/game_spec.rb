@@ -4,7 +4,7 @@ describe Game do
 
 	before do
 		Singleton.__init__(Board)
-		allow_any_instance_of(Game).to receive(:number_of_humans).and_return(2)
+		allow_any_instance_of(Game).to receive(:get_human_count).and_return(2)
 		allow_any_instance_of(Player).to receive(:gets).and_return("1","2","3")
 		allow_any_instance_of(Game).to receive(:display)
 	end
@@ -19,11 +19,15 @@ describe Game do
 		end
 
 		it 'creates as many AI players as required, always letting the human play first' do
-			allow_any_instance_of(Game).to receive(:number_of_humans).and_return(1)
+			allow_any_instance_of(Game).to receive(:get_human_count).and_return(1)
 			allow_any_instance_of(Player).to receive(:your_turn)
 			game2 = Game.new
 			expect(game2.player_1.class).to eq HumanPlayer
 			expect(game2.player_2.class).to eq ComputerPlayer
+			allow_any_instance_of(Game).to receive(:get_human_count).and_return(0)
+			game3 = Game.new
+			expect(game3.player_1.class).to eq ComputerPlayer
+			expect(game3.player_2.class).to eq ComputerPlayer
 		end
 
 	end
