@@ -35,8 +35,8 @@ describe Game do
 	context 'passing control between players' do
 
 		it 'prompting tells each player to take their turn' do
-			expect(game.player1).to receive(:your_turn).ordered
-			expect(game.player2).to receive(:your_turn).ordered
+			expect(game.player_1).to receive(:your_turn).ordered
+			expect(game.player_2).to receive(:your_turn).ordered
 			game.run_game
 		end
 
@@ -52,15 +52,15 @@ describe Game do
 
 		it 'after prompting each player, checks if the board has a completed line' do
 			expect(game).to receive(:completed_line?).twice
-			allow(game.player1).to receive(:your_turn)
-			allow(game.player2).to receive(:your_turn)
+			allow(game.player_1).to receive(:your_turn)
+			allow(game.player_2).to receive(:your_turn)
 			game.run_game
 		end
 
 		it "checks whether the game is over every time a player takes a turn" do
 			expect(game).to receive(:completion_check_for).twice
-			allow(game.player1).to receive(:your_turn)
-			allow(game.player2).to receive(:your_turn)
+			allow(game.player_1).to receive(:your_turn)
+			allow(game.player_2).to receive(:your_turn)
 			game.run_game
 		end
 
@@ -88,14 +88,14 @@ describe Game do
 			allow(game).to receive(:completed_line?).and_return(true)
 			allow(game).to receive(:exit)
 			expect(game).to receive(:puts).with "Congratulations Player 1. Your victory will be immortalised by the bards!"
-			game.run_turn_for(game.player1)
+			game.run_turn_for(game.player_1)
 		end
 
 		it "specifies when player 2 has won" do
 			allow(game).to receive(:completed_line?).and_return(true)
 			allow(game).to receive(:exit)
 			expect(game).to receive(:puts).with "Congratulations Player 2. Your victory will be immortalised by the bards!"
-			game.run_turn_for(game.player2)
+			game.run_turn_for(game.player_2)
 		end
 
 	end

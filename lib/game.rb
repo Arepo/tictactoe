@@ -10,7 +10,6 @@ class Game
 
 	def initialize
 		super
-		create_players
 		setup_players(get_human_count)
 		display
 	end
@@ -28,10 +27,11 @@ class Game
 	end
 
 	def run_game
-		print "Player 1: "; run_turn_for(player1)
-		print "Player 2: "; run_turn_for(player2)
-		# exit
+		print "Player 1: "; run_turn_for(player_1)
+		print "Player 2: "; run_turn_for(player_2)
 	end
+
+	private
 
 	def run_turn_for(player)
 		player.your_turn
@@ -41,21 +41,19 @@ class Game
 
 	def display
 		puts "*" * 50 + "\n"
-		player1.board.display
+		player_1.board.display
 		puts "\n" + "*" * 50
 	end
 
 	def completion_check_for(player = nil)
 		if completed_line?
-			puts "Congratulations #{player == player1 ? "Player 1" : "Player 2"}. Your victory will be immortalised by the bards!"
+			puts "Congratulations #{player == player_1 ? "Player 1" : "Player 2"}. Your victory will be immortalised by the bards!"
 			exit
 		elsif board_full?
 			puts "A strange game. The only winning move is not to play. How about a nice game of chess?\n\n"
 			exit
 		end
 	end
-
-	private
 
 	def get_human_count
 		puts "How many humans are playing (0, 1 or 2)?"
@@ -65,24 +63,6 @@ class Game
 	def setup_players(human_count)
 		human_count.times {players << HumanPlayer.new}
 		(2 - human_count).times {players << ComputerPlayer.new}
-	end
-
-	def create_players
-		# must be a better way of writing this
-		case get_human_count
-		when 0
-			@player1 = ComputerPlayer.new
-			@player2 = ComputerPlayer.new
-		when 1
-			@player1 = HumanPlayer.new
-			@player2 = ComputerPlayer.new
-		when 2
-			@player1 = HumanPlayer.new
-			@player2 = HumanPlayer.new
-		else
-			puts "Please enter 0, 1 or 2"
-			create_players
-		end
 	end
 
 end
