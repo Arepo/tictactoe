@@ -6,12 +6,21 @@ class Game
 
 	include WinChecker
 
-	attr_reader :player1, :player2
+	attr_reader :player1, :player2, :players
 
 	def initialize
 		super
 		create_players
+		setup_players
 		display
+	end
+
+	def player_1
+		@players[0]
+	end
+
+	def player_2
+		@players[1]
 	end
 
 	def run_game
@@ -47,6 +56,10 @@ class Game
 	def number_of_humans
 		puts "How many humans are playing (0, 1 or 2)?"
 		gets.chomp.to_i
+	end
+
+	def setup_players
+		@players = [Player.new, Player.new]
 	end
 
 	def create_players

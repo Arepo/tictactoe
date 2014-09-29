@@ -14,18 +14,16 @@ describe Game do
 	context 'setup' do
 
 		it 'has two players' do
-			expect(game.player1.class).to eq HumanPlayer
-			expect(game.player2.class).to eq HumanPlayer
+			expect(game.players[0].is_a? Player).to be true
+			expect(game.players[1].is_a? Player).to be true
 		end
 
 		it 'creates as many AI players as required, always letting the human play first' do
 			allow_any_instance_of(Game).to receive(:number_of_humans).and_return(1)
 			allow_any_instance_of(Player).to receive(:your_turn)
 			game2 = Game.new
-			expect(game2.player1).to respond_to :get_square
-			expect(game2.player1).not_to respond_to :candidate_lines
-			expect(game2.player2).to respond_to :candidate_lines
-			expect(game2.player2).not_to respond_to :get_square
+			expect(game2.player_1.class).to eq HumanPlayer
+			expect(game2.player_2.class).to eq ComputerPlayer
 		end
 
 	end
