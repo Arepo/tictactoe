@@ -15,7 +15,7 @@ class Array
 	end
 
 	def get_mode
-		#this method (inc ninvert) cribbed from Google
+		#this method (inc ninvert) nabbed from Google
 		(inject(Hash.new(0)) { |hash,element| hash[element] += 1; hash }.ninvert.max || [[]]).last
 	end
 

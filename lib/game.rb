@@ -31,18 +31,10 @@ class Game
 		print "Player 2: "; run_turn_for(player_2)
 	end
 
-	private
-
 	def run_turn_for(player)
 		player.your_turn
 		display
 		completion_check_for(player)
-	end
-
-	def display
-		puts "*" * 50 + "\n"
-		player_1.board.display
-		puts "\n" + "*" * 50
 	end
 
 	def completion_check_for(player = nil)
@@ -53,6 +45,14 @@ class Game
 			puts "A strange game. The only winning move is not to play. How about a nice game of chess?\n\n"
 			exit
 		end
+	end
+
+	private
+
+	def display
+		puts "*" * 50 + "\n"
+		player_1.board.display
+		puts "\n" + "*" * 50
 	end
 
 	def get_human_count
