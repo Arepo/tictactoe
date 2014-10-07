@@ -1,5 +1,4 @@
-require 'game'
-require 'byebug'
+require_relative 'spec_helper'
 
 class CheckerContainer; include WinChecker; end
 

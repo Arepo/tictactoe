@@ -1,5 +1,4 @@
-require 'square'
-require 'byebug'
+require_relative 'spec_helper'
 
 describe Square do
 

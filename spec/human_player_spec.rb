@@ -1,4 +1,4 @@
-require 'human_player'
+require_relative 'spec_helper'
 
 describe HumanPlayer do
 

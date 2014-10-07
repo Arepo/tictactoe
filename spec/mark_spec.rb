@@ -1,4 +1,4 @@
-require 'mark'
+require_relative 'spec_helper'
 
 describe Mark do
 

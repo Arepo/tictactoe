@@ -1,4 +1,4 @@
-require 'row'
+require_relative 'spec_helper'
 
 describe 'row' do
 
