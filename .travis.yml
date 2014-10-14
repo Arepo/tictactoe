@@ -5,4 +5,4 @@ before_install:
   - gem install bundler
 
 script:
-  - bundle exec rspec
+  - bundle exec rspec --color --format documentation 
