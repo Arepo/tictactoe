@@ -2,6 +2,7 @@ Unbeatable TicTacToe
 =========
 
 [![Build Status](https://travis-ci.org/Arepo/tictactoe.svg?branch=master)](https://travis-ci.org/Arepo/tictactoe)
+[![Coverage Status](https://coveralls.io/repos/Arepo/tictactoe/badge.png?branch=master)](https://coveralls.io/r/Arepo/tictactoe?branch=master)
 
 This is a 0-2 player version of TicTacToe, playable only in the console via keyboard commands. The goal I gave myself was to create a thoroughly RSpec tested game as a learning exercise, using nothing besides basic ruby - no gems except for testing. And the AI had to be unbeatable.
 
