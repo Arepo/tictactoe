@@ -1,6 +1,8 @@
 Unbeatable TicTacToe
 =========
 
+[![Build Status](https://travis-ci.org/Arepo/tictactoe.svg?branch=master)](https://travis-ci.org/Arepo/tictactoe)
+
 This is a 0-2 player version of TicTacToe, playable only in the console via keyboard commands. The goal I gave myself was to create a thoroughly RSpec tested game as a learning exercise, using nothing besides basic ruby - no gems except for testing. And the AI had to be unbeatable.
 
 I didn't worry about the UI too much (let's politely call it ugly but forgiving), but I was trying to write code as clearly as possible, in such a way as to make it relatively easy to extend for play on an NxN grid. I think it would be easy to do so for the two-player game. Joshua (the AI) would need a little tweaking, but probably not too much for him to play sanely if imperfectly.
